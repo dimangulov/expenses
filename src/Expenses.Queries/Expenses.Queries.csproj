@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.4</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="4.19.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Expenses.Api.Common\Expenses.Api.Common.csproj" />
+    <ProjectReference Include="..\Expenses.Api.Models\Expenses.Api.Models.csproj" />
+    <ProjectReference Include="..\Expenses.Data.Access\Expenses.Data.Access.csproj" />
+    <ProjectReference Include="..\Expenses.Data.Model\Expenses.Data.Model.csproj" />
+  </ItemGroup>
+
+</Project>

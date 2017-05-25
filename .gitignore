@@ -15,44 +15,44 @@
 # yarn
 yarn.lock
 
-npm-debug.log.*
+**/npm-debug.log.*
 
 # Build results
-[Dd]ebug/
-[Dd]ebugPublic/
-[Rr]elease/
-[Rr]eleases/
-x64/
-x86/
-build/
-bld/
-bin/
-Bin/
-obj/
-Obj/
+**/[Dd]ebug/
+**/[Dd]ebugPublic/
+**/[Rr]elease/
+**/[Rr]eleases/
+**/x64/
+**/x86/
+**/build/
+**/bld/
+**/bin/
+**/Bin/
+**/obj/
+**/Obj/
 
 # Visual Studio 2015 cache/options directory
-.vs/
+**/.vs/
 
-/wwwroot/dist/
-/Client/dist/
+**/wwwroot/dist/
+**/Client/dist/
 
 # MSTest test Results
-[Tt]est[Rr]esult*/
-[Bb]uild[Ll]og.*
+**/[Tt]est[Rr]esult*/
+**/[Bb]uild[Ll]og.*
 
 # NUNIT
-*.VisualState.xml
-TestResult.xml
+**/*.VisualState.xml
+**/TestResult.xml
 
 # Build Results of an ATL Project
-[Dd]ebugPS/
-[Rr]eleasePS/
-dlldata.c
+**/[Dd]ebugPS/
+**/[Rr]eleasePS/
+**/dlldata.c
 
 # DNX
-project.lock.json
-artifacts/
+**/project.lock.json
+**/artifacts/
 
 *_i.c
 *_p.c
@@ -80,7 +80,7 @@ artifacts/
 *.scc
 
 # Chutzpah Test files
-_Chutzpah*
+**/_Chutzpah*
 
 # Visual C++ cache files
 ipch/
@@ -136,17 +136,17 @@ AutoTest.Net/
 doc/
 
 # DocProject is a documentation generator add-in
-DocProject/buildhelp/
-DocProject/Help/*.HxT
-DocProject/Help/*.HxC
-DocProject/Help/*.hhc
-DocProject/Help/*.hhk
-DocProject/Help/*.hhp
-DocProject/Help/Html2
-DocProject/Help/html
+**/DocProject/buildhelp/
+**/DocProject/Help/*.HxT
+**/DocProject/Help/*.HxC
+**/DocProject/Help/*.hhc
+**/DocProject/Help/*.hhk
+**/DocProject/Help/*.hhp
+**/DocProject/Help/Html2
+**/DocProject/Help/html
 
 # Click-Once directory
-publish/
+**/publish/
 
 # Publish Web Output
 *.[Pp]ublish.xml
@@ -197,10 +197,10 @@ ClientBin/
 orleans.codegen.cs
 
 # Workaround for https://github.com/aspnet/JavaScriptServices/issues/235
-/node_modules
-node_modules
-node_modules/**/*
-node_modules/_placeholder.txt
+**/node_modules
+**/node_modules
+**/node_modules/**/*
+**/node_modules/_placeholder.txt
 
 # RIA/Silverlight projects
 Generated_Code/
@@ -261,3 +261,4 @@ _Pvt_Extensions
 
 # Jest Code Coverage report
 coverage/
+src/Expenses/Client/dist/
