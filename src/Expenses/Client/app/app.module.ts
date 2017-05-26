@@ -27,8 +27,13 @@ import { AuthGuard } from './security/auth.guard';
 import { LoginComponent } from "./containers/login/login.component";
 import { AuthService } from "./security/auth.service";
 import { AlertService } from "./shared/alert.service";
+import { HttpService } from "./shared/http.service";
+import { ExpenseService } from "./shared/expense.service";
 import { AlertComponent } from './components/alert/alert.component';
 import { CurrentUserInfoComponent } from './components/current-user-info/current-user-info.component';
+
+import { GridModule } from '@progress/kendo-angular-grid';
+
 
 export function createTranslateLoader(http: Http, baseHref) {
     // Temporary Azure hack
@@ -68,6 +73,8 @@ export function createTranslateLoader(http: Http, baseHref) {
             }
         }),
 
+        GridModule,
+
         // App Routing
         RouterModule.forRoot([
             {
@@ -91,7 +98,9 @@ export function createTranslateLoader(http: Http, baseHref) {
         TranslateModule,
         AuthGuard,
         AuthService,
-        AlertService
+        AlertService,
+        HttpService,
+        ExpenseService
     ]
 })
 export class AppModule {

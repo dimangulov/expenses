@@ -39,11 +39,11 @@ namespace Expenses.Queries.Tests
         }
 
         [Fact]
-        public async Task GetShouldReturnFirstPage()
+        public async Task GetShouldReturnAll()
         {
             _userList.Add(new User());
 
-            var result = _query.Get(1, 5);
+            var result = _query.Get();
             result.Count().Should().Be(1);
         }
 
@@ -52,48 +52,10 @@ namespace Expenses.Queries.Tests
         {
             _userList.Add(new User());
             _userList.Add(new User{IsDeleted = true});
+            _userList.Add(new User{IsDeleted = true});
 
-            var result = _query.Get(1, 5);
+            var result = _query.Get();
             result.Count().Should().Be(1);
-        }
-
-        [Fact]
-        public void GetShouldThrowIfPageNoLessThan1()
-        {
-            _userList.Add(new User());
-
-            Action get = () =>
-            {
-                _query.Get(0, 5);
-            };
-
-            get.ShouldThrow<BadRequestException>();
-        }
-
-        [Fact]
-        public void GetShouldThrowIfPageSizeLessThan1()
-        {
-            _userList.Add(new User());
-
-            Action get = () =>
-            {
-                _query.Get(1, 0);
-            };
-
-            get.ShouldThrow<BadRequestException>();
-        }
-
-        [Fact]
-        public void GetShouldThrowIfPageSizeMoreThan100()
-        {
-            _userList.Add(new User());
-
-            Action get = () =>
-            {
-                _query.Get(1, 101);
-            };
-
-            get.ShouldThrow<BadRequestException>();
         }
 
         [Fact]

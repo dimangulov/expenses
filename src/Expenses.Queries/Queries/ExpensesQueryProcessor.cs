@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Expenses.Api.Common.Exceptions;
+using Expenses.Api.Models.Common;
 using Expenses.Api.Models.Expenses;
 using Expenses.Api.Models.Users;
 using Expenses.Data.Access.DAL;
@@ -22,42 +23,10 @@ namespace Expenses.Queries.Queries
             _securityContext = securityContext;
         }
 
-        public Expense[] Get(int pageNo, int pageSize, DateTime? fromDate, DateTime? toDate)
+        public IQueryable<Expense> Get()
         {
-            if (pageNo < 1)
-            {
-                throw new BadRequestException("Page number should be greater or equal 1");
-            }
-
-            if (pageSize < 1)
-            {
-                throw new BadRequestException("Page size should be greater or equal 1");
-            }
-
-            if (pageSize > 100)
-            {
-                throw new BadRequestException("Page size should be less or equal 100");
-            }
-
             var query = GetQuery();
-
-            if (fromDate.HasValue)
-            {
-                query = query.Where(x => x.Date >= fromDate.Value);
-            }
-
-            if (toDate.HasValue)
-            {
-                query = query.Where(x => x.Date <= toDate.Value);
-            }
-
-            var users = query
-                .Where(x => !x.IsDeleted)
-                .Skip((pageNo - 1) * pageSize)
-                .Take(pageSize)
-                .ToArray();
-
-            return users;
+            return query;
         }
 
         private IQueryable<Expense> GetQuery()

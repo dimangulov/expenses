@@ -2,8 +2,8 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using Expenses.Api.IntegrationTests.Common;
+using Expenses.Api.Models.Common;
 using Expenses.Api.Models.Expenses;
-using Expenses.Api.Models.Users;
 using FluentAssertions;
 using Newtonsoft.Json;
 using Xunit;
@@ -22,12 +22,12 @@ namespace Expenses.Api.IntegrationTests.Expenses
             _client = server.Client;
         }
 
-        public static async Task<ExpenseModel[]> Get(HttpClient client, int pageNo = 1, int pageSize = 20)
+        public static async Task<DataResult<ExpenseModel>> Get(HttpClient client)
         {
-            var response = await client.GetAsync($"api/Expenses?pageNo={pageNo}&pageSize={pageSize}&fromDate={DateTime.Now.AddDays(-1):u}");
+            var response = await client.GetAsync($"api/Expenses?skip={0}&take={20}&fromDate<{DateTime.Now:u}");
             response.EnsureSuccessStatusCode();
             var responseText = await response.Content.ReadAsStringAsync();
-            var items = JsonConvert.DeserializeObject<ExpenseModel[]>(responseText);
+            var items = JsonConvert.DeserializeObject<DataResult<ExpenseModel>>(responseText);
             return items;
         }
 

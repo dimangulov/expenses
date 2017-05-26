@@ -13,5 +13,6 @@ namespace Expenses.Maps
         void Map<TSource, TDestination>(TSource source, TDestination destination);
 
         TResult[] Map<TSource, TResult>(IEnumerable<TSource> sourceQuery);
+        IQueryable<TResult> Map<TSource, TResult>(IQueryable<TSource> sourceQuery);
     }
 }

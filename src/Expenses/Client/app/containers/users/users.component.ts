@@ -28,6 +28,7 @@ import { UserService } from '../../shared/user.service';
 export class UsersComponent implements OnInit {
 
     users: IUser[];
+    total: number = 0;
     selectedUser: IUser;
 
     // Use "constructor"s only for dependency injection
@@ -38,8 +39,9 @@ export class UsersComponent implements OnInit {
     ngOnInit() {
         this.userService.getUsers().subscribe(result => {
             console.log('Get user result: ', result);
-            console.log('TransferHttp [GET] /api/users/allresult', result);
-            this.users = result as IUser[];
+            //console.log('TransferHttp [GET] /api/users/allresult', result);
+            this.users = result.data as IUser[];
+            this.total = result.total;
         });
     }
 

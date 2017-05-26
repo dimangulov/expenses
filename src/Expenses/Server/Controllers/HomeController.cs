@@ -12,17 +12,18 @@ namespace Expenses.Server.Controllers
     [AllowAnonymous]
     public class HomeController : Controller
     {
-        private readonly INodeServices _nodeServices;
+        /*private readonly INodeServices _nodeServices;
         private readonly IHostingEnvironment _hostingEnvironment;
 
         public HomeController(INodeServices nodeServices, IHostingEnvironment hostingEnvironment)
         {
             _nodeServices = nodeServices;
             _hostingEnvironment = hostingEnvironment;
-        }
+        }*/
 
         public async Task<IActionResult> Index()
         {
+            /*
             var applicationBasePath = _hostingEnvironment.ContentRootPath;
             var requestFeature = Request.HttpContext.Features.Get<IHttpRequestFeature>();
             var unencodedPathAndQuery = requestFeature.RawTarget;
@@ -55,7 +56,7 @@ namespace Expenses.Server.Controllers
             ViewData["Meta"] = prerenderResult.Globals["meta"]; // set our <meta> SEO tags
             ViewData["Links"] = prerenderResult.Globals["links"]; // set our <link rel="canonical"> etc SEO tags
             ViewData["TransferData"] = prerenderResult.Globals["transferData"]; // our transfer data set to window.TRANSFER_CACHE = {};
-
+            */
             return View();
         }
 
@@ -64,7 +65,7 @@ namespace Expenses.Server.Controllers
             return View();
         }
 
-        private IRequest AbstractHttpContextRequestInfo(HttpRequest request)
+        /*private IRequest AbstractHttpContextRequestInfo(HttpRequest request)
         {
 
             IRequest requestSimplified = new IRequest();
@@ -73,10 +74,10 @@ namespace Expenses.Server.Controllers
             requestSimplified.host = request.Host;
 
             return requestSimplified;
-        }
+        }*/
     }
 
-    public class IRequest
+    /*public class IRequest
     {
         public object cookies { get; set; }
         public object headers { get; set; }
@@ -89,5 +90,5 @@ namespace Expenses.Server.Controllers
 
         // Your data here ?
         public object thisCameFromDotNET { get; set; }
-    }
+    }*/
 }

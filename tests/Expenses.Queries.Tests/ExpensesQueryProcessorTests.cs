@@ -40,39 +40,12 @@ namespace Expenses.Queries.Tests
         }
 
         [Fact]
-        public void GetShouldReturnFirstPage()
+        public void GetShouldReturnAll()
         {
             _expenseList.Add(new Expense{UserId = _currentUser.Id});
 
-            var result = _query.Get(1, 5, null, null);
-            result.Length.Should().Be(1);
-        }
-
-        [Fact]
-        public void GetShouldReturnExpensesAfterFromDate()
-        {
-            var fromDate = DateTime.Now;
-
-            _expenseList.Add(new Expense { UserId = _currentUser.Id, Date = fromDate.AddDays(-1)});
-            _expenseList.Add(new Expense { UserId = _currentUser.Id, Date = fromDate});
-            _expenseList.Add(new Expense { UserId = _currentUser.Id, Date = fromDate.AddDays(+1)});
-
-            var result = _query.Get(1, 5, fromDate, null);
-            result.Length.Should().Be(2);
-        }
-
-        [Fact]
-        public void GetShouldReturnExpensesBeforeToDate()
-        {
-            var to = DateTime.Now;
-
-            _expenseList.Add(new Expense { UserId = _currentUser.Id, Date = to.AddDays(-1) });
-            _expenseList.Add(new Expense { UserId = _currentUser.Id, Date = to });
-            _expenseList.Add(new Expense { UserId = _currentUser.Id, Date = to.AddDays(+1) });
-            _expenseList.Add(new Expense { UserId = _currentUser.Id, Date = to.AddDays(+2) });
-
-            var result = _query.Get(1, 5, null, to);
-            result.Length.Should().Be(2);
+            var result = _query.Get().ToList();
+            result.Count.Should().Be(1);
         }
 
         [Fact]
@@ -81,8 +54,8 @@ namespace Expenses.Queries.Tests
             _expenseList.Add(new Expense { UserId = _random.Next() });
             _expenseList.Add(new Expense { UserId = _currentUser.Id });
 
-            var result = _query.Get(1, 5, null, null);
-            result.Length.Should().Be(1);
+            var result = _query.Get().ToList();
+            result.Count().Should().Be(1);
             result[0].UserId.Should().Be(_currentUser.Id);
         }
 
@@ -94,8 +67,8 @@ namespace Expenses.Queries.Tests
             _expenseList.Add(new Expense { UserId = _random.Next() });
             _expenseList.Add(new Expense { UserId = _currentUser.Id });
 
-            var result = _query.Get(1, 5, null, null);
-            result.Length.Should().Be(2);
+            var result = _query.Get();
+            result.Count().Should().Be(2);
         }
 
         [Fact]
@@ -104,47 +77,8 @@ namespace Expenses.Queries.Tests
             _expenseList.Add(new Expense { UserId = _currentUser.Id });
             _expenseList.Add(new Expense { UserId = _currentUser.Id, IsDeleted = true});
 
-            var result = _query.Get(1, 5, null, null);
+            var result = _query.Get();
             result.Count().Should().Be(1);
-        }
-
-        [Fact]
-        public void GetShouldThrowIfPageNoLessThan1()
-        {
-            _expenseList.Add(new Expense { UserId = _currentUser.Id });
-
-            Action get = () =>
-            {
-                _query.Get(0, 5, null, null);
-            };
-
-            get.ShouldThrow<BadRequestException>();
-        }
-
-        [Fact]
-        public void GetShouldThrowIfPageSizeLessThan1()
-        {
-            _expenseList.Add(new Expense { UserId = _currentUser.Id });
-
-            Action get = () =>
-            {
-                _query.Get(1, 0, null, null);
-            };
-
-            get.ShouldThrow<BadRequestException>();
-        }
-
-        [Fact]
-        public void GetShouldThrowIfPageSizeMoreThan100()
-        {
-            _expenseList.Add(new Expense { UserId = _currentUser.Id });
-
-            Action get = () =>
-            {
-                _query.Get(1, 101, null, null);
-            };
-
-            get.ShouldThrow<BadRequestException>();
         }
 
         [Fact]

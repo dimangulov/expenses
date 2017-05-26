@@ -26,6 +26,11 @@ namespace Expenses.Maps
             return sourceQuery.Select(x => _mapper.Map<TResult>(x)).ToArray();
         }
 
+        public IQueryable<TResult> Map<TSource, TResult>(IQueryable<TSource> sourceQuery)
+        {
+            return sourceQuery.ProjectTo<TResult>(_mapper.ConfigurationProvider);
+        }
+
         public void Map<TSource, TDestination>(TSource source, TDestination destination)
         {
             _mapper.Map(source, destination);

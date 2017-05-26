@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Expenses.Api.Models.Common;
+using Expenses.Api.Models.Expenses;
 using Expenses.Api.Models.Users;
 using Expenses.Data.Access.Constants;
 using Expenses.Data.Model;
@@ -12,7 +15,6 @@ namespace Expenses.Server.RestAPI
 {
     [Route("api/[controller]")]
     [Authorize(Roles = Roles.AdministratorOrManager)]
-    //[Authorize(Roles = Roles.Manager)]
     public class UsersController : Controller
     {
         private readonly IUsersQueryProcessor _query;
@@ -25,10 +27,11 @@ namespace Expenses.Server.RestAPI
         }
 
         [HttpGet]
-        public UserModel[] Get(int pageNo = 1, int pageSize = 20)
+        [QueryableResult]
+        public IQueryable<UserModel> Get()
         {
-            var items = _query.Get(pageNo, pageSize);
-            var models = _mapper.Map<User, UserModel>(items);
+            var result = _query.Get();
+            var models = _mapper.Map<User, UserModel>(result);
             return models;
         }
 

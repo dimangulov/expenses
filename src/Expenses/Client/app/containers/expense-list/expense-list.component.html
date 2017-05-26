@@ -1,10 +1,16 @@
 ﻿<h1>  {{ 'EXPENSE_LIST' | translate }}</h1>
 
 <div class="row">
-  <div class="col-lg-12">
-    <h2>{{ 'HOME_FEATURE_LIST_TITLE' | translate }} </h2>
-    <ul>
-      <li>ASP.NET Core 1.1 :: ( Visual Studio 2017 )</li>
-    </ul>
-  </div>
+    <kendo-grid
+        [data]="items"
+        [pageSize]="take"
+        [skip]="skip"
+        [pageable]="true"
+        (pageChange)="pageChange($event)">
+        <kendo-grid-column field="amount"></kendo-grid-column>
+        <kendo-grid-column field="date"></kendo-grid-column>
+        <kendo-grid-column field="description"></kendo-grid-column>
+        <kendo-grid-column field="comment"></kendo-grid-column>
+        <kendo-grid-column field="username"></kendo-grid-column>
+    </kendo-grid>
 </div>

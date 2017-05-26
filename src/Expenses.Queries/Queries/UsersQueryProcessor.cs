@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Expenses.Api.Common.Exceptions;
+using Expenses.Api.Models.Common;
 using Expenses.Api.Models.Users;
 using Expenses.Data.Access.DAL;
 using Expenses.Data.Access.Helpers;
@@ -18,35 +19,17 @@ namespace Expenses.Queries.Queries
             _uow = uow;
         }
 
-        public User[] Get(int pageNo, int pageSize)
+        public IQueryable<User> Get()
         {
-            if (pageNo < 1)
-            {
-                throw new BadRequestException("Page number should be greater or equal 1");
-            }
+            var query = GetQuery();
 
-            if (pageSize < 1)
-            {
-                throw new BadRequestException("Page size should be greater or equal 1");
-            }
-
-            if (pageSize > 100)
-            {
-                throw new BadRequestException("Page size should be less or equal 100");
-            }
-
-            var users = GetQuery()
-                .Where(x => !x.IsDeleted)
-                .Skip((pageNo - 1) * pageSize)
-                .Take(pageSize)
-                .ToArray();
-
-            return users;
+            return query;
         }
 
         private IQueryable<User> GetQuery()
         {
             return _uow.Query<User>()
+                .Where(x => !x.IsDeleted)
                 .Include(x => x.Roles)
                     .ThenInclude(x => x.Role);
         }
@@ -55,7 +38,7 @@ namespace Expenses.Queries.Queries
         {
             var user = GetQuery().FirstOrDefault(x => x.Id == id);
 
-            if (user == null || user.IsDeleted)
+            if (user == null)
             {
                 throw new NotFoundException("User is not found");
             }

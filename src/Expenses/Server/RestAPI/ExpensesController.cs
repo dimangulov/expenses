@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Expenses.Api.Models.Expenses;
-using Expenses.Api.Models.Users;
 using Expenses.Data.Model;
 using Expenses.Filters;
 using Expenses.Maps;
@@ -23,10 +23,11 @@ namespace Expenses.Server.RestAPI
         }
 
         [HttpGet]
-        public ExpenseModel[] Get(int pageNo = 1, int pageSize = 20, DateTime? fromDate = null, DateTime? toDate = null)
+        [QueryableResult]
+        public IQueryable<ExpenseModel> Get()
         {
-            var items = _query.Get(pageNo, pageSize, fromDate, toDate);
-            var models = _mapper.Map<Expense, ExpenseModel>(items);
+            var result = _query.Get();
+            var models = _mapper.Map<Expense, ExpenseModel>(result);
             return models;
         }
 

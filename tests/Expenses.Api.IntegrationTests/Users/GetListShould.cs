@@ -1,6 +1,7 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 using Expenses.Api.IntegrationTests.Common;
+using Expenses.Api.Models.Common;
 using Expenses.Api.Models.Users;
 using FluentAssertions;
 using Newtonsoft.Json;
@@ -20,12 +21,12 @@ namespace Expenses.Api.IntegrationTests.Users
             _client = server.Client;
         }
 
-        public static async Task<UserModel[]> Get(HttpClient client, int pageNo = 1, int pageSize = 20)
+        public static async Task<DataResult<UserModel>> Get(HttpClient client)
         {
-            var response = await client.GetAsync($"api/Users?pageNo={pageNo}&pageSize={pageSize}");
+            var response = await client.GetAsync($"api/Users?skip={0}&take={20}");
             response.EnsureSuccessStatusCode();
             var responseText = await response.Content.ReadAsStringAsync();
-            var items = JsonConvert.DeserializeObject<UserModel[]>(responseText);
+            var items = JsonConvert.DeserializeObject<DataResult<UserModel>>(responseText);
             return items;
         }
 
