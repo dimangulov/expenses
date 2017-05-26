@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace Expenses.Auth
+namespace Expenses.Security.Auth
 {
     public class RSAKeyHelper
     {

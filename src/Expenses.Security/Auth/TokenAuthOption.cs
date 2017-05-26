@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Expenses.Auth
+namespace Expenses.Security.Auth
 {
     public class TokenAuthOption
     {

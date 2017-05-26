@@ -1,11 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Expenses.Api.Models.Users;
-using Expenses.Auth;
 using Expenses.Data.Access.Constants;
 using Expenses.Data.Model;
 using Expenses.Filters;
 using Expenses.Maps;
-using Expenses.Queries;
 using Expenses.Queries.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

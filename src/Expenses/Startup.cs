@@ -1,11 +1,9 @@
 ﻿using System;
-using System.IdentityModel.Tokens.Jwt;
 using System.IO;
-using System.Security.Claims;
-using Expenses.Auth;
 using Expenses.Data.Access.DAL;
 using Expenses.Filters;
 using Expenses.IoC;
+using Expenses.Security.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -58,10 +56,7 @@ namespace Expenses
                     .RequireAuthenticatedUser().Build());
             });
             // Add framework services.
-            services.AddMvc(options =>
-            {
-                options.Filters.Add(new ApiExceptionFilter());
-            });
+            services.AddMvc(options => { options.Filters.Add(new ApiExceptionFilter()); });
             services.AddNodeServices();
 
             // Register the Swagger generator, defining one or more Swagger documents
@@ -147,7 +142,6 @@ namespace Expenses
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.FromMinutes(0)
                 },
-                
             });
         }
     }

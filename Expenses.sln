@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{FEF2A9C0
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expenses.Api.IntegrationTests", "tests\Expenses.Api.IntegrationTests\Expenses.Api.IntegrationTests.csproj", "{86B596D9-4C19-493D-8AC9-F73F944F0A0F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expenses.Security", "src\Expenses.Security\Expenses.Security.csproj", "{5E4A3640-ABA0-4CD5-AE50-58EDA4CFF7EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{86B596D9-4C19-493D-8AC9-F73F944F0A0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86B596D9-4C19-493D-8AC9-F73F944F0A0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86B596D9-4C19-493D-8AC9-F73F944F0A0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E4A3640-ABA0-4CD5-AE50-58EDA4CFF7EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E4A3640-ABA0-4CD5-AE50-58EDA4CFF7EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E4A3640-ABA0-4CD5-AE50-58EDA4CFF7EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E4A3640-ABA0-4CD5-AE50-58EDA4CFF7EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,5 +80,6 @@ Global
 		{4C7C38FC-F01A-4363-8B05-782A5AF16CFF} = {59A8DD03-2A33-4DE1-AD53-9A359E60001B}
 		{46D08EDA-96FF-4790-BE59-3E898237C05A} = {FEF2A9C0-07A1-4E2F-935D-439E434D7774}
 		{86B596D9-4C19-493D-8AC9-F73F944F0A0F} = {FEF2A9C0-07A1-4E2F-935D-439E434D7774}
+		{5E4A3640-ABA0-4CD5-AE50-58EDA4CFF7EB} = {59A8DD03-2A33-4DE1-AD53-9A359E60001B}
 	EndGlobalSection
 EndGlobal

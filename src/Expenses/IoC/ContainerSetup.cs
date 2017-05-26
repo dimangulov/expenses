@@ -7,6 +7,7 @@ using Expenses.Helpers;
 using Expenses.Maps;
 using Expenses.Queries;
 using Expenses.Queries.Queries;
+using Expenses.Security.Auth;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +21,12 @@ namespace Expenses.IoC
             AddUow(services, configuration);
             AddQueries(services);
             ConfigureAutoMapper(services);
+            ConfigureAuth(services);
+        }
+
+        private static void ConfigureAuth(IServiceCollection services)
+        {
+            services.AddScoped<ITokenBuilder, TokenBuilder>();
         }
 
         private static void ConfigureAutoMapper(IServiceCollection services)
