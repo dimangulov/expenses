@@ -14,6 +14,9 @@ namespace Expenses.Api.IntegrationTests.Common
 {
     public class ApiServer : IDisposable
     {
+        public const string Username = "admin";
+        public const string Password = "admin";
+
         private IConfigurationRoot _config;
 
         public ApiServer()
@@ -26,7 +29,7 @@ namespace Expenses.Api.IntegrationTests.Common
             Server = new TestServer(new WebHostBuilder().UseStartup<Startup>());
             Client = Server.CreateClient();
             
-            Authenticate("admin", "admin");
+            Authenticate(Username, Password);
         }
 
         private void Authenticate(string username, string password)

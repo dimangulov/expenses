@@ -7,10 +7,13 @@ using Expenses.Helpers;
 using Expenses.Maps;
 using Expenses.Queries;
 using Expenses.Queries.Queries;
+using Expenses.Security;
 using Expenses.Security.Auth;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Expenses.IoC
 {
@@ -26,7 +29,9 @@ namespace Expenses.IoC
 
         private static void ConfigureAuth(IServiceCollection services)
         {
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<ITokenBuilder, TokenBuilder>();
+            services.AddScoped<ISecurityContext, SecurityContext>();
         }
 
         private static void ConfigureAutoMapper(IServiceCollection services)

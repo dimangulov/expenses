@@ -33,6 +33,12 @@ namespace Expenses.Filters
                 context.Result = new JsonResult(context.Exception.Message);
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
             }
+            else if (context.Exception is ForbiddenException)
+            {
+                context.Result = new JsonResult(context.Exception.Message);
+                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;
+            }
+
 
             base.OnException(context);
         }
