@@ -49,6 +49,33 @@ namespace Expenses.Queries.Tests
         }
 
         [Fact]
+        public void GetShouldReturnExpensesAfterFromDate()
+        {
+            var fromDate = DateTime.Now;
+
+            _expenseList.Add(new Expense { UserId = _currentUser.Id, Date = fromDate.AddDays(-1)});
+            _expenseList.Add(new Expense { UserId = _currentUser.Id, Date = fromDate});
+            _expenseList.Add(new Expense { UserId = _currentUser.Id, Date = fromDate.AddDays(+1)});
+
+            var result = _query.Get(1, 5, fromDate, null);
+            result.Length.Should().Be(2);
+        }
+
+        [Fact]
+        public void GetShouldReturnExpensesBeforeToDate()
+        {
+            var to = DateTime.Now;
+
+            _expenseList.Add(new Expense { UserId = _currentUser.Id, Date = to.AddDays(-1) });
+            _expenseList.Add(new Expense { UserId = _currentUser.Id, Date = to });
+            _expenseList.Add(new Expense { UserId = _currentUser.Id, Date = to.AddDays(+1) });
+            _expenseList.Add(new Expense { UserId = _currentUser.Id, Date = to.AddDays(+2) });
+
+            var result = _query.Get(1, 5, null, to);
+            result.Length.Should().Be(2);
+        }
+
+        [Fact]
         public void GetShouldReturnOnlyUserExpenses()
         {
             _expenseList.Add(new Expense { UserId = _random.Next() });
@@ -57,6 +84,18 @@ namespace Expenses.Queries.Tests
             var result = _query.Get(1, 5, null, null);
             result.Length.Should().Be(1);
             result[0].UserId.Should().Be(_currentUser.Id);
+        }
+
+        [Fact]
+        public void GetShouldReturnAllExpensesForAdministrator()
+        {
+            _securityContext.Setup(x => x.IsAdministrator).Returns(true);
+
+            _expenseList.Add(new Expense { UserId = _random.Next() });
+            _expenseList.Add(new Expense { UserId = _currentUser.Id });
+
+            var result = _query.Get(1, 5, null, null);
+            result.Length.Should().Be(2);
         }
 
         [Fact]

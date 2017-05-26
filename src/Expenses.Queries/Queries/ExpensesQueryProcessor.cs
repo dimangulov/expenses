@@ -39,7 +39,19 @@ namespace Expenses.Queries.Queries
                 throw new BadRequestException("Page size should be less or equal 100");
             }
 
-            var users = GetQuery()
+            var query = GetQuery();
+
+            if (fromDate.HasValue)
+            {
+                query = query.Where(x => x.Date >= fromDate.Value);
+            }
+
+            if (toDate.HasValue)
+            {
+                query = query.Where(x => x.Date <= toDate.Value);
+            }
+
+            var users = query
                 .Where(x => !x.IsDeleted)
                 .Skip((pageNo - 1) * pageSize)
                 .Take(pageSize)
@@ -53,8 +65,11 @@ namespace Expenses.Queries.Queries
             var q = _uow.Query<Expense>()
                 .Where(x => !x.IsDeleted);
 
-            var userId = _securityContext.User.Id;
-            q = q.Where(x => x.UserId == userId);
+            if (!_securityContext.IsAdministrator)
+            {
+                var userId = _securityContext.User.Id;
+                q = q.Where(x => x.UserId == userId);
+            }
 
             return q;
         }
