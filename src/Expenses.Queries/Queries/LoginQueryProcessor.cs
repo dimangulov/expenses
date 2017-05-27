@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Expenses.Api.Common.Exceptions;
 using Expenses.Api.Models.Login;
 using Expenses.Api.Models.Users;
 using Expenses.Data.Access.DAL;
@@ -37,7 +38,7 @@ namespace Expenses.Queries.Queries
 
             if (user == null)
             {
-                throw new UnauthorizedAccessException("username/password aren't right");
+                throw new BadRequestException("username/password aren't right");
             }
 
             var expiresIn = DateTime.Now + TokenAuthOption.ExpiresSpan;

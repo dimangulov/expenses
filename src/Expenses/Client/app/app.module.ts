@@ -29,6 +29,7 @@ import { AuthService } from "./security/auth.service";
 import { AlertService } from "./shared/alert.service";
 import { HttpService } from "./shared/http.service";
 import { ExpenseService } from "./shared/expense.service";
+import { FilterHelper } from "./shared/filter.helper";
 import { AlertComponent } from './components/alert/alert.component';
 import { CurrentUserInfoComponent } from './components/current-user-info/current-user-info.component';
 
@@ -100,7 +101,8 @@ export function createTranslateLoader(http: Http, baseHref) {
         AuthService,
         AlertService,
         HttpService,
-        ExpenseService
+        ExpenseService,
+        FilterHelper
     ]
 })
 export class AppModule {

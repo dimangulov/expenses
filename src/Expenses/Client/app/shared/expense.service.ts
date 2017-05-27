@@ -1,5 +1,5 @@
 ﻿import { Injectable, Inject } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { URLSearchParams, RequestOptionsArgs } from '@angular/http';
 import { ORIGIN_URL } from './constants/baseurl.constants';
 import { IExpense } from '../models/IExpense';
 import { Observable } from 'rxjs/Observable';
@@ -13,22 +13,21 @@ export class ExpenseService {
 
     }
 
-    getAll(skip?:number, take?:number): Observable<any> {
-        return this.http.get(`${this.baseUrl}/api/expenses`, (options) => {
-            let params = new URLSearchParams();
-            if (skip) {
-                params.set("skip", skip.toString());
-            }
+    getAll(requestBuilder?: (opt: RequestOptionsArgs) => void): Observable<any> {
+        return this.http.get(`${this.baseUrl}/api/expenses`, requestBuilder)
+            .map(data => {
+                for (let item of (<any>data).data) {
+                    this.fixDates(item);
+                }
 
-            if (take) {
-                params.set("take", take.toString());
-            }
-            options.search = params;
-        });
+                return data;
+            });
     }
 
     getOne(item: IExpense): Observable<any> {
-        return this.http.get(`${this.baseUrl}/api/expenses/` + item.id);
+        return this.http
+            .get(`${this.baseUrl}/api/expenses/` + item.id)
+            .map(item => this.fixDates(<any>item));
     }
 
     delete(item: IExpense): Observable<any> {
@@ -41,5 +40,10 @@ export class ExpenseService {
 
     add(item: IExpense): Observable<any> {
         return this.http.post(`${this.baseUrl}/api/expenses`, item);
+    }
+
+    fixDates(item: IExpense):IExpense {
+        item.date = new Date(item.date);
+        return item;
     }
 }

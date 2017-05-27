@@ -1,7 +1,10 @@
 ﻿import { Component, OnInit, Inject } from '@angular/core';
 import {IExpense} from "../../models/IExpense";
 import { ExpenseService } from "../../shared/expense.service";
-import { GridDataResult, PageChangeEvent } from '@progress/kendo-angular-grid';
+import { FilterHelper } from "../../shared/filter.helper";
+import { GridDataResult, PageChangeEvent, DataStateChangeEvent } from '@progress/kendo-angular-grid';
+import { process, State } from '@progress/kendo-data-query';
+import { URLSearchParams, RequestOptionsArgs } from '@angular/http';
 
 @Component({
     selector: 'expense-list',
@@ -9,12 +12,15 @@ import { GridDataResult, PageChangeEvent } from '@progress/kendo-angular-grid';
 })
 export class ExpenseListComponent implements OnInit {
     items: GridDataResult;
-    total: number;
-    take: number = 10;
-    skip: number = 0;
+
+    private state: State = {
+        skip: 0,
+        take: 25,
+        filter:null
+    };
 
     // Use "constructor"s only for dependency injection
-    constructor(private expenseService:ExpenseService) { }
+    constructor(private expenseService: ExpenseService, private filterHelper: FilterHelper) { }
 
     // Here you want to handle anything with @Input()'s @Output()'s
     // Data retrieval / etc - this is when the Component is "ready" and wired up
@@ -22,16 +28,45 @@ export class ExpenseListComponent implements OnInit {
         this.loadItems();
     }
 
-    pageChange({ skip, take }:PageChangeEvent) {
-        this.skip = skip;
-        this.take = take;
+    dataStateChange(state: DataStateChangeEvent): void {
+        this.state = state;
+        console.log(state);
         this.loadItems();
     }
 
     loadItems() {
-        this.expenseService.getAll(this.skip, this.take).subscribe(result => {
-            console.log('Get user result: ', result);
-            this.items = result;
-        });
+        this.expenseService.getAll((options) => this.buildRequest(options))
+            .subscribe(result => {
+                console.log('Get user result: ', result);
+                this.items = result;
+            });
+    }
+
+    buildRequest(options) {
+        var commands = [];
+
+        if (this.state.skip) {
+            commands.push("skip="+this.state.skip);
+        }
+
+        if (this.state.take) {
+            commands.push("take=" + this.state.take);
+        }
+
+        if (this.state.filter) {
+            var filterParams = this.filterHelper.Build(this.state.filter);
+            console.log(filterParams);
+
+            commands = [...commands, ...filterParams];
+        }
+
+        console.log(commands);
+        var commandsText = commands.reduce((prev, curr) => prev + "&" + curr);
+        console.log(commandsText);
+
+        var params = new URLSearchParams();
+        params.set("commands", commandsText);
+
+        options.search = params;
     }
 }

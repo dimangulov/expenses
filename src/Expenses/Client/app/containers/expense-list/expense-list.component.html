@@ -3,14 +3,16 @@
 <div class="row">
     <kendo-grid
         [data]="items"
-        [pageSize]="take"
-        [skip]="skip"
+        [pageSize]="state.take"
+        [skip]="state.skip"
         [pageable]="true"
-        (pageChange)="pageChange($event)">
-        <kendo-grid-column field="amount"></kendo-grid-column>
-        <kendo-grid-column field="date"></kendo-grid-column>
+        [filterable]="true"
+        [filter]="state.filter"
+        (dataStateChange)="dataStateChange($event)">
+        <kendo-grid-column field="amount" filter="numeric"></kendo-grid-column>
+        <kendo-grid-column field="date" filter="date" format="{0:g}"></kendo-grid-column>
         <kendo-grid-column field="description"></kendo-grid-column>
         <kendo-grid-column field="comment"></kendo-grid-column>
-        <kendo-grid-column field="username"></kendo-grid-column>
+        <kendo-grid-column field="username" [filterable]="false"></kendo-grid-column>
     </kendo-grid>
 </div>

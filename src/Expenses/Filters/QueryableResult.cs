@@ -18,9 +18,13 @@ namespace Expenses.Filters
             if (query == null) throw new Exception("Unable to retreive value of IQueryable from context result.");
             Type entityType = query.GetType().GenericTypeArguments[0];
 
-            string queryString = context.HttpContext.Request.QueryString.HasValue ? context.HttpContext.Request.QueryString.Value : null;
+            //string queryString = context.HttpContext.Request.QueryString.HasValue ? context.HttpContext.Request.QueryString.Value : null;
 
-            var data = QueryableHelper.GetAutoQuery(queryString, entityType, query,
+            if (!context.HttpContext.Request.Query.ContainsKey("commands")) return;
+            var commands = context.HttpContext.Request.Query["commands"];
+            if (string.IsNullOrWhiteSpace(commands)) return;
+
+            var data = QueryableHelper.GetAutoQuery(commands, entityType, query,
                 new AutoQueryableProfile {UnselectableProperties = new string[0]});
             var total = System.Linq.Queryable.Count(query);
             context.Result = new OkObjectResult(new DataResult{Data = data, Total = total});

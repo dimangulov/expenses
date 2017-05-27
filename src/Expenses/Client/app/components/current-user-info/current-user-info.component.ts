@@ -19,7 +19,6 @@ export class CurrentUserInfoComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.userSubscription = this.authService.userLoggedIn.subscribe(u => {
-            console.log(u);
             this.userIsLogged = true;
             this.user = u;
         });
