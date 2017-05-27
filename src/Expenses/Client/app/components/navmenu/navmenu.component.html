@@ -4,14 +4,14 @@
       <a class='navbar-brand' [routerLink]="['/expenses']">Expense Managment System</a>
     </div>
     <div class='clearfix'></div>
-    <div class='navbar-collapse collapse'>
+    <div  *ngIf="userIsLogged" class='navbar-collapse collapse'>
       <ul class='nav navbar-nav'>
         <li [routerLinkActive]="['link-active']">
           <a [routerLink]="['/expenses']">
             <span class='glyphicon glyphicon-home'></span> {{ 'EXPENSE_LIST' | translate }}
           </a>
         </li>
-        <li [routerLinkActive]="['link-active']">
+        <li *ngIf="showUsersSection" [routerLinkActive]="['link-active']">
           <a [routerLink]="['/users']">
             <span class='glyphicon glyphicon-user'></span> {{ 'USERS' | translate }}
           </a>

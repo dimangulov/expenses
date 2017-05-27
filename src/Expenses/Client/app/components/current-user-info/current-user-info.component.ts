@@ -13,6 +13,7 @@ export class CurrentUserInfoComponent implements OnInit, OnDestroy {
     user: any;
     userIsLogged: boolean;
     userSubscription: any;
+    userLogoutSubscription: any;
 
     constructor(private authService: AuthService, private router: Router) {
     }
@@ -22,6 +23,11 @@ export class CurrentUserInfoComponent implements OnInit, OnDestroy {
             this.userIsLogged = true;
             this.user = u;
         });
+
+        this.userLogoutSubscription = this.authService.userLoggedOut.subscribe(u => {
+            this.userIsLogged = false;
+            this.user = null;
+        });
     }
 
     ngOnDestroy(): void {
@@ -29,6 +35,7 @@ export class CurrentUserInfoComponent implements OnInit, OnDestroy {
         this.user = null;
 
         this.userSubscription.unsubscribe();;
+        this.userLogoutSubscription.unsubscribe();;
     }
 
     logout() {
