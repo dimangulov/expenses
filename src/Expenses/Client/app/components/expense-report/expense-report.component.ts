@@ -4,7 +4,6 @@ import { ExpenseService } from "../../shared/expense.service";
 import { FilterHelper } from "../../shared/filter.helper";
 import { GridDataResult, PageChangeEvent, DataStateChangeEvent } from '@progress/kendo-angular-grid';
 import { process, State, GroupDescriptor, aggregateBy, CompositeFilterDescriptor } from '@progress/kendo-data-query';
-import { URLSearchParams, RequestOptionsArgs } from '@angular/http';
 
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -141,7 +140,7 @@ export class ExpenseReportComponent implements OnInit {
     }
 
     loadItems() {
-        this.expenseService.getAll((options) => this.buildRequest(options))
+        this.expenseService.getAll((options) => this.filterHelper.buildRequest(options, this.state))
             .subscribe(result => {
                 console.log('Get result: ', result);
 
@@ -158,40 +157,6 @@ export class ExpenseReportComponent implements OnInit {
 
                 this.averagePerDay = this.total / daysCount;
             });
-    }
-
-    buildRequest(options) {
-        var commands = [];
-
-        if (this.state.skip) {
-            commands.push("skip="+this.state.skip);
-        }
-
-        if (this.state.take) {
-            commands.push("take=" + this.state.take);
-        }
-
-        if (this.state.filter) {
-            var filterParams = this.filterHelper.Build(this.state.filter);
-            console.log(filterParams);
-
-            commands = [...commands, ...filterParams];
-        }
-
-        if (this.state.sort && this.state.sort.length > 0) {
-            let sort = this.state.sort[0];
-            var dir = sort.dir == "asc" ? "orderby" : "orderbydesc";
-            commands.push(dir + "=" + sort.field);
-        }
-
-        console.log(commands);
-        var commandsText = commands.reduce((prev, curr) => prev + "&" + curr);
-        console.log(commandsText);
-
-        var params = new URLSearchParams();
-        params.set("commands", commandsText);
-
-        options.search = params;
     }
 
     printReport() {

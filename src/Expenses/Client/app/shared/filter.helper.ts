@@ -1,5 +1,6 @@
 ﻿import { Injectable } from "@angular/core";
-import { FilterDescriptor, CompositeFilterDescriptor, isCompositeFilterDescriptor } from '@progress/kendo-data-query';
+import { FilterDescriptor, CompositeFilterDescriptor, State } from '@progress/kendo-data-query';
+import { URLSearchParams, RequestOptionsArgs } from '@angular/http';
 
 type OperatorFunction = (property:string, value:string) => string;
 
@@ -89,5 +90,39 @@ export class FilterHelper {
             ;
 
         return `(${result})`;*/
+    }
+
+    buildRequest(options: RequestOptionsArgs, state:State) {
+        var commands = [];
+
+        if (state.skip) {
+            commands.push("skip=" + state.skip);
+        }
+
+        if (state.take) {
+            commands.push("take=" + state.take);
+        }
+
+        if (state.filter) {
+            var filterParams = this.Build(state.filter);
+            console.log(filterParams);
+
+            commands = [...commands, ...filterParams];
+        }
+
+        if (state.sort && state.sort.length > 0) {
+            let sort = state.sort[0];
+            var dir = sort.dir == "asc" ? "orderby" : "orderbydesc";
+            commands.push(dir + "=" + sort.field);
+        }
+
+        console.log(commands);
+        var commandsText = commands.reduce((prev, curr) => prev + "&" + curr);
+        console.log(commandsText);
+
+        var params = new URLSearchParams();
+        params.set("commands", commandsText);
+
+        options.search = params;
     }
 }
