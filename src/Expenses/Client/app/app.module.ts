@@ -14,6 +14,7 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { ExpenseListComponent } from './components/expense-list/expense-list.component';
 import { ExpenseFormComponent } from './components/expense-form/expense-form.component';
+import { ExpenseReportComponent } from './components/expense-report/expense-report.component';
 import { ExpensesComponent } from './containers/expenses/expenses.component';
 import { UsersComponent } from './containers/users/users.component';
 import { UserDetailComponent } from './components/user-detail/user-detail.component';
@@ -61,6 +62,7 @@ export function createTranslateLoader(http: Http, baseHref) {
         AlertComponent,
         CurrentUserInfoComponent,
         ExpenseFormComponent,
+        ExpenseReportComponent,
         ExpensesComponent,
         RegisterComponent
     ],
@@ -97,6 +99,7 @@ export function createTranslateLoader(http: Http, baseHref) {
                     { path: '', component: ExpenseListComponent },
                     { path: 'add', component: ExpenseFormComponent },
                     { path: 'edit/:id', component: ExpenseFormComponent, resolve: { expense: ExpenseResolve} },
+                    { path: 'report', component: ExpenseReportComponent}
                 ]
             },
             {

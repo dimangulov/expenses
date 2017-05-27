@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace Expenses
@@ -56,7 +57,12 @@ namespace Expenses
                     .RequireAuthenticatedUser().Build());
             });
             // Add framework services.
-            services.AddMvc(options => { options.Filters.Add(new ApiExceptionFilter()); });
+            services.AddMvc(options => { options.Filters.Add(new ApiExceptionFilter()); })
+                .AddJsonOptions(o =>
+                {
+                    o.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Local;
+                });
+            ;
             services.AddNodeServices();
 
             // Register the Swagger generator, defining one or more Swagger documents

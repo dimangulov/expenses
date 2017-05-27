@@ -1,0 +1,38 @@
+﻿<div class="row">
+    <button class="btn btn-success" (click)="printReport()">Print report</button>
+</div>
+<div class="row">
+    <a (click)="goToPrevWeek()">&lt;- go to the previous week</a>
+    |{{fromDate|date:"fullDate"}} - {{toDate|date:"fullDate"}}|
+    <a (click)="goToNextWeek()">go to the next week -&gt;</a>
+</div>
+<div class="row">
+    <kendo-grid
+        [data]="items"
+        [pageSize]="state.take"
+        [skip]="state.skip"
+        [filter]="state.filter"
+        [sort]="state.sort"
+        [groupable]="false"
+        [group]="state.groups"
+        (dataStateChange)="dataStateChange($event)"
+                >
+        <kendo-grid-column field="amount" filter="numeric">
+            <ng-template
+                kendoGridGroupFooterTemplate
+                let-group="group"
+                let-aggregates>Sum: {{aggregates["amount"].sum}}</ng-template>
+            <ng-template
+                kendoGridFooterTemplate
+                let-column="column">Total: {{total}}</ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column field="date" filter="date" format="{0:g}">
+            <ng-template kendoGridFooterTemplate
+                         let-column="column">Average per day:{{averagePerDay}}</ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column field="date_Day" title="day" filter="date" format="{0:d}" [hidden]="true"></kendo-grid-column>
+        <kendo-grid-column field="description"></kendo-grid-column>
+        <kendo-grid-column field="comment"></kendo-grid-column>
+        <kendo-grid-column field="username" [filterable]="false"></kendo-grid-column>
+    </kendo-grid>
+</div>

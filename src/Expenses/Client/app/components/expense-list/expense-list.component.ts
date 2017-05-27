@@ -44,7 +44,7 @@ export class ExpenseListComponent implements OnInit {
     loadItems() {
         this.expenseService.getAll((options) => this.buildRequest(options))
             .subscribe(result => {
-                console.log('Get user result: ', result);
+                console.log('Get result: ', result);
                 this.items = result;
             });
     }
