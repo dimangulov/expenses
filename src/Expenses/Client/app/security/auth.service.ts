@@ -26,6 +26,10 @@ export class AuthService {
             });
     }
 
+    register(user:IUser) {
+        return this.http.post("/api/Login/Register", user);
+    }
+
     tryGetInfoFromStore(): boolean {
         var data = sessionStorage.getItem(this.storageKey);
 

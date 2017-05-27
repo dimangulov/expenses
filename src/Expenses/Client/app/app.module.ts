@@ -27,6 +27,7 @@ import { TransferHttpModule } from '../modules/transfer-http/transfer-http.modul
 
 import { AuthGuard } from './security/auth.guard';
 import { LoginComponent } from "./containers/login/login.component";
+import { RegisterComponent } from "./containers/register/register.component";
 import { AuthService } from "./security/auth.service";
 import { AlertService } from "./shared/alert.service";
 import { HttpService } from "./shared/http.service";
@@ -60,7 +61,8 @@ export function createTranslateLoader(http: Http, baseHref) {
         AlertComponent,
         CurrentUserInfoComponent,
         ExpenseFormComponent,
-        ExpensesComponent
+        ExpensesComponent,
+        RegisterComponent
     ],
     imports: [
         CommonModule,
@@ -100,7 +102,8 @@ export function createTranslateLoader(http: Http, baseHref) {
             {
               path: 'users', component: UsersComponent, canActivate: [AuthGuard]
             },
-            { path: 'login', component: LoginComponent }
+            { path: 'login', component: LoginComponent },
+            { path: 'register', component: RegisterComponent },
         ])
     ],
     providers: [
