@@ -1,0 +1,32 @@
+﻿<div class="col-md-6 col-md-offset-3">
+    <h2>Edit expense</h2>
+    <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" novalidate>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !description.valid }">
+            <label for="description">Description</label>
+            <input type="text" class="form-control" name="description" [(ngModel)]="model.description" #description="ngModel" required />
+            <div *ngIf="f.submitted && !description.valid" class="help-block">Description is required</div>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !amount.valid }">
+            <label for="amount">Amount</label>
+            <input type="number" class="form-control" name="amount" [(ngModel)]="model.amount" #amount="ngModel" required />
+            <div *ngIf="f.submitted && !amount.valid" class="help-block">Amount is required</div>
+        </div>
+        <div class="form-group">
+            <label for="date">Date</label>
+            <br/>
+            <!--<input type="datetime-local" class="form-control" name="date" [(ngModel)]="model.date" #date="ngModel" required />
+            <div *ngIf="f.submitted && !date.valid" class="help-block">Date is required</div>-->
+            <kendo-datepicker
+                [format]="'dd-MMM-yyyy HH:mm:ss'"
+                [(value)]="model.date"
+            ></kendo-datepicker>
+        </div>
+        <div class="form-group">
+            <label for="comment">Comment</label>
+            <input type="text" class="form-control" name="comment" [(ngModel)]="model.comment" #comment="ngModel" />
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary">Save</button>
+        </div>
+    </form>
+</div>

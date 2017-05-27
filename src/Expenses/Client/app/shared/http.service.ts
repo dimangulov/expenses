@@ -39,14 +39,13 @@ export class HttpService {
         var options = this.getHttpOptions();
         return this.http.put(url, body, options)
             .map(r => r.json())
-            .catch(r => this.handleResponse(r))
+            .catch(r => this.handleResponse(r)) 
             ;
     }
 
     public delete(url: string): Observable<Response> {
         var options = this.getHttpOptions();
         return this.http.delete(url, options)
-            .map(r => r.json())
             .catch(r => this.handleResponse(r))
             ;
     }
@@ -61,10 +60,8 @@ export class HttpService {
             this.router.navigate(["/login"]);
             return Observable.throw(res);;
         }
-        // If everything went fine, return the response
-        else {
-            return Observable.empty();
-        }
+
+        return res;
     }
 
     private getHttpOptions(): RequestOptionsArgs {

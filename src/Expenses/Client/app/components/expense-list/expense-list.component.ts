@@ -6,6 +6,8 @@ import { GridDataResult, PageChangeEvent, DataStateChangeEvent } from '@progress
 import { process, State } from '@progress/kendo-data-query';
 import { URLSearchParams, RequestOptionsArgs } from '@angular/http';
 
+import { Router, ActivatedRoute } from '@angular/router';
+
 @Component({
     selector: 'expense-list',
     templateUrl: './expense-list.component.html'
@@ -16,11 +18,16 @@ export class ExpenseListComponent implements OnInit {
     private state: State = {
         skip: 0,
         take: 25,
-        filter:null
+        filter: null,
+        sort: [
+            {
+                dir: "desc",
+                field: "date"
+            }]
     };
 
     // Use "constructor"s only for dependency injection
-    constructor(private expenseService: ExpenseService, private filterHelper: FilterHelper) { }
+    constructor(private expenseService: ExpenseService, private filterHelper: FilterHelper, private router: Router) { }
 
     // Here you want to handle anything with @Input()'s @Output()'s
     // Data retrieval / etc - this is when the Component is "ready" and wired up
@@ -60,6 +67,12 @@ export class ExpenseListComponent implements OnInit {
             commands = [...commands, ...filterParams];
         }
 
+        if (this.state.sort && this.state.sort.length > 0) {
+            let sort = this.state.sort[0];
+            var dir = sort.dir == "asc" ? "orderby" : "orderbydesc";
+            commands.push(dir + "=" + sort.field);
+        }
+
         console.log(commands);
         var commandsText = commands.reduce((prev, curr) => prev + "&" + curr);
         console.log(commandsText);
@@ -68,5 +81,24 @@ export class ExpenseListComponent implements OnInit {
         params.set("commands", commandsText);
 
         options.search = params;
+    }
+
+    editHandler({dataItem}) {
+        console.log(dataItem);
+        this.router.navigate(["expenses", "edit", dataItem.id]);
+    }
+
+    removeHandler({ dataItem }) {
+        console.log(dataItem);
+        this.expenseService.delete(dataItem)
+            .subscribe(
+            () => {
+                console.log("done");
+                    this.loadItems();
+                },
+                () => {
+                    //TODO
+                }
+            );
     }
 }

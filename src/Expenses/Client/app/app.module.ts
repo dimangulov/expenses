@@ -12,7 +12,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
-import { ExpenseListComponent } from './containers/expense-list/expense-list.component';
+import { ExpenseListComponent } from './components/expense-list/expense-list.component';
+import { ExpenseFormComponent } from './components/expense-form/expense-form.component';
+import { ExpensesComponent } from './containers/expenses/expenses.component';
 import { UsersComponent } from './containers/users/users.component';
 import { UserDetailComponent } from './components/user-detail/user-detail.component';
 import { NotFoundComponent } from './containers/not-found/not-found.component';
@@ -34,7 +36,8 @@ import { AlertComponent } from './components/alert/alert.component';
 import { CurrentUserInfoComponent } from './components/current-user-info/current-user-info.component';
 
 import { GridModule } from '@progress/kendo-angular-grid';
-
+import { ExpenseResolve} from "./resolvers/expense.resolver";
+import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 
 export function createTranslateLoader(http: Http, baseHref) {
     // Temporary Azure hack
@@ -55,7 +58,9 @@ export function createTranslateLoader(http: Http, baseHref) {
         NotFoundComponent,
         LoginComponent,
         AlertComponent,
-        CurrentUserInfoComponent
+        CurrentUserInfoComponent,
+        ExpenseFormComponent,
+        ExpensesComponent
     ],
     imports: [
         CommonModule,
@@ -75,6 +80,7 @@ export function createTranslateLoader(http: Http, baseHref) {
         }),
 
         GridModule,
+        DateInputsModule,
 
         // App Routing
         RouterModule.forRoot([
@@ -84,7 +90,12 @@ export function createTranslateLoader(http: Http, baseHref) {
                 pathMatch: 'full'
             },
             {
-              path: 'expenses', component: ExpenseListComponent, canActivate: [AuthGuard]
+                path: 'expenses', component: ExpensesComponent, canActivate: [AuthGuard],
+                children: [
+                    { path: '', component: ExpenseListComponent },
+                    { path: 'add', component: ExpenseFormComponent },
+                    { path: 'edit/:id', component: ExpenseFormComponent, resolve: { expense: ExpenseResolve} },
+                ]
             },
             {
               path: 'users', component: UsersComponent, canActivate: [AuthGuard]
@@ -102,7 +113,8 @@ export function createTranslateLoader(http: Http, baseHref) {
         AlertService,
         HttpService,
         ExpenseService,
-        FilterHelper
+        FilterHelper,
+        ExpenseResolve
     ]
 })
 export class AppModule {

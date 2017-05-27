@@ -24,9 +24,9 @@ export class ExpenseService {
             });
     }
 
-    getOne(item: IExpense): Observable<any> {
+    getOne(id: any): Observable<any> {
         return this.http
-            .get(`${this.baseUrl}/api/expenses/` + item.id)
+            .get(`${this.baseUrl}/api/expenses/` + id)
             .map(item => this.fixDates(<any>item));
     }
 
