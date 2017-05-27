@@ -4,6 +4,8 @@
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <IsPackable>false</IsPackable>
     <PackageTargetFallback>portable-net45+win8</PackageTargetFallback>
+    <ApplicationInsightsResourceId>/subscriptions/b1e8cc44-ed79-476c-9a07-d232b76b1c93/resourcegroups/expenses-dev/providers/microsoft.insights/components/expenses-dev</ApplicationInsightsResourceId>
+    <ApplicationInsightsAnnotationResourceId>/subscriptions/b1e8cc44-ed79-476c-9a07-d232b76b1c93/resourceGroups/expenses-dev/providers/microsoft.insights/components/expenses-dev</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>TRACE;DEBUG;NET46</DefineConstants>
@@ -11,6 +13,7 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.0.2" />
     <PackageReference Include="AutoQueryable.AspNetCore.Filter" Version="0.1.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.3" />
@@ -53,6 +56,9 @@
     <ProjectReference Include="..\Expenses.Data.Access\Expenses.Data.Access.csproj" />
     <ProjectReference Include="..\Expenses.Data.Model\Expenses.Data.Model.csproj" />
     <ProjectReference Include="..\Expenses.Queries\Expenses.Queries.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
   </ItemGroup>
   <Target Name="RunWebpack" AfterTargets="ComputeFilesToPublish">
     <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->

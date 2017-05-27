@@ -28,6 +28,12 @@ namespace Expenses
                 .AddJsonFile("appsettings.json", true, true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
                 .AddEnvironmentVariables();
+
+            if (env.IsDevelopment())
+            {
+                builder.AddApplicationInsightsSettings(developerMode: true);
+            }
+
             Configuration = builder.Build();
         }
 
@@ -48,6 +54,8 @@ namespace Expenses
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplicationInsightsTelemetry(Configuration);
+
             ContainerSetup.Setup(services, Configuration);
 
             services.AddAuthorization(auth =>
