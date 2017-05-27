@@ -1,0 +1,28 @@
+﻿<div class="row">
+    <kendo-grid
+        [data]="items"
+        [pageSize]="state.take"
+        [skip]="state.skip"
+        [pageable]="true"
+        [filterable]="true"
+        [filter]="state.filter"
+        [sortable]="{ mode: 'single' }"
+        [sort]="state.sort"
+        (dataStateChange)="dataStateChange($event)"
+        (edit)="editHandler($event)" (remove)="removeHandler($event)">
+        <kendo-grid-column field="username"></kendo-grid-column>
+        <kendo-grid-column field="firstName"></kendo-grid-column>
+        <kendo-grid-column field="lastName"></kendo-grid-column>
+        <kendo-grid-column field="roles" [sortable]="false" [filterable]="false">
+            <template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                {{reduceRoles(dataItem.roles)}}
+            </template>
+        </kendo-grid-column>
+        <kendo-grid-command-column title="command" width="220">
+            <ng-template kendoGridCellTemplate>
+                <button kendoGridEditCommand class="k-primary">Edit</button>
+                <button kendoGridRemoveCommand>Delete</button>
+            </ng-template>
+        </kendo-grid-command-column>
+    </kendo-grid>
+</div>

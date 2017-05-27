@@ -97,6 +97,7 @@ namespace Expenses.Queries.Queries
                 throw new NotFoundException("User is not found");
             }
 
+            user.Username = model.Username;
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
 

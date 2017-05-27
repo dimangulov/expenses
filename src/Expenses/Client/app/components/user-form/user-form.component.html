@@ -1,0 +1,28 @@
+﻿<div class="col-md-6 col-md-offset-3">
+    <h2>Edit user</h2>
+    <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" novalidate>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" name="username" [(ngModel)]="model.username" #username="ngModel" required />
+            <div *ngIf="f.submitted && !username.valid" class="help-block">Username is required</div>
+        </div> 
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !firstName.valid }">
+            <label for="firstName">First Name</label>
+            <input type="text" class="form-control" name="firstName" [(ngModel)]="model.firstName" #firstName="ngModel" required />
+            <div *ngIf="f.submitted && !firstName.valid" class="help-block">First Name is required</div>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !lastName.valid }">
+            <label for="lastName">Last Name</label>
+            <input type="text" class="form-control" name="lastName" [(ngModel)]="model.lastName" #lastName="ngModel" required />
+            <div *ngIf="f.submitted && !lastName.valid" class="help-block">Last Name is required</div>
+        </div>
+        <div class="form-group">
+            <label>Roles</label><br/>
+            <input type="checkbox" [ngModelOptions]="{standalone: true}" [(ngModel)]="isAdministrator">Administrator<br>
+            <input type="checkbox" [ngModelOptions]="{standalone: true}" [(ngModel)]="isManager">Manager<br>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary">Save</button>
+        </div><!---->
+    </form>
+</div>

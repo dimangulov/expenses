@@ -1,10 +1,9 @@
 ﻿export interface IUser {
-    id: number;
-    username: string;
-    password: string;
-    firstName: string;
-    lastName: string;
-    roles:string[];
+    id?: number;
+    username?: string;
+    firstName?: string;
+    lastName?: string;
+    roles?:string[];
 }
  
 export class Roles {

@@ -1,4 +1,5 @@
 ﻿import { Injectable, Inject } from '@angular/core';
+import { URLSearchParams, RequestOptionsArgs } from '@angular/http';
 import { ORIGIN_URL } from './constants/baseurl.constants';
 import { IUser } from '../models/IUser';
 import { Observable } from 'rxjs/Observable';
@@ -12,28 +13,24 @@ export class UserService {
 
     }
 
-    getUsers(): Observable<any> {
-        // ** TransferHttp example / concept **
-        //    - Here we make an Http call on the server, save the result on the window object and pass it down with the SSR,
-        //      The Client then re-uses this Http result instead of hitting the server again!
-
-        //  NOTE : transferHttp also automatically does .map(res => res.json()) for you, so no need for these calls
-        return this.http.get(`${this.baseUrl}/api/users`);
+    getAll(requestBuilder?: (opt: RequestOptionsArgs) => void): Observable<any> {
+        return this.http.get(`${this.baseUrl}/api/users`, requestBuilder);
     }
 
-    getUser(user: IUser): Observable<any> {
-        return this.http.get(`${this.baseUrl}/api/users/` + user.id);
+    getOne(id: any): Observable<any> {
+        return this.http
+            .get(`${this.baseUrl}/api/users/` + id);
     }
 
-    deleteUser(user: IUser): Observable<any> {
-        return this.http.delete(`${this.baseUrl}/api/users/` + user.id);
+    delete(item: IUser): Observable<any> {
+        return this.http.delete(`${this.baseUrl}/api/users/` + item.id);
     }
 
-    updateUser(user: IUser): Observable<any> {
-        return this.http.put(`${this.baseUrl}/api/users/` + user.id, user);
+    update(item: IUser): Observable<any> {
+        return this.http.put(`${this.baseUrl}/api/users/` + item.id, item);
     }
 
-    addUser(newUser: IUser): Observable<any> {
-        return this.http.post(`${this.baseUrl}/api/users`, newUser);
+    add(item: IUser): Observable<any> {
+        return this.http.post(`${this.baseUrl}/api/users`, item);
     }
 }

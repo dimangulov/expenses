@@ -10,6 +10,8 @@ namespace Expenses.Api.Models.Users
         }
 
         [Required]
+        public string Username { get; set; }
+        [Required]
         public string LastName { get; set; }
         [Required]
         public string FirstName { get; set; }

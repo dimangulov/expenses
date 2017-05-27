@@ -168,6 +168,7 @@ namespace Expenses.Queries.Tests
 
             var model = new UpdateUserModel
             {
+                Username = _random.Next().ToString(),
                 LastName = _random.Next().ToString(),
                 FirstName = _random.Next().ToString(),
             };
@@ -175,6 +176,7 @@ namespace Expenses.Queries.Tests
             var result = await _query.Update(user.Id, model);
 
             result.Should().Be(user);
+            result.Username.Should().Be(model.Username);
             result.LastName.Should().Be(model.LastName);
             result.FirstName.Should().Be(model.FirstName);
 
