@@ -20,7 +20,7 @@ export class ExpenseReportComponent implements OnInit {
     fromDate:Date;
     toDate:Date;
 
-    private state: State = {
+    state: State = {
         skip: 0,
         take: 1000,
         filter: null,

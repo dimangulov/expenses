@@ -29,21 +29,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="yarn.lock" />
+    <Compile Remove="Client\app\containers\expense-list\**" />
 	<Content Remove="wwwroot\dist\**" />
+	<None Remove="Client\app\containers\expense-list\**" />
 	<None Remove="Client\dist\**" />
     <Content Remove="coverage\**" />
 
     <!-- Files not to publish (note that the 'dist' subfolders are re-added below) -->
     <Content Remove="Client\**" />
+    <EmbeddedResource Remove="Client\app\containers\expense-list\**" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Client\tsconfig.browser.json" />
     <Content Include="Client\tsconfig.server.aot.json" />
     <Content Include="Client\tsconfig.server.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Client\app\containers\expense-list\expense-list.component.html" />
-    <None Include="Client\app\containers\expense-list\expense-list.component.ts" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Client\app\containers\login\" />

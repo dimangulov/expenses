@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 export class ExpenseListComponent implements OnInit {
     items: GridDataResult;
 
-    private state: State = {
+    state: State = {
         skip: 0,
         take: 25,
         filter: null,

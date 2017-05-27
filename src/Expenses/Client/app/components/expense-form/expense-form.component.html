@@ -17,7 +17,7 @@
             <!--<input type="datetime-local" class="form-control" name="date" [(ngModel)]="model.date" #date="ngModel" required />
             <div *ngIf="f.submitted && !date.valid" class="help-block">Date is required</div>-->
             <kendo-datepicker
-                [format]="'dd-MMM-yyyy HH:mm:ss'"
+                [format]="'dd-MMM-yyyy HH:mm'"
                 [(value)]="model.date"
             ></kendo-datepicker>
         </div>
