@@ -4,7 +4,7 @@ import {LoginPage} from "../pages/login.page";
 import {UserInfoControl} from "../pages/user-info.control";
 import {config} from "../e2e.config";
    
-describe('expense login page', function () {
+describe('expense login page', () => {
     let loginPage = new LoginPage();
     let userInfoControl = new UserInfoControl();
 

@@ -39,11 +39,16 @@ describe('expense login page', () => {
 
         let expense = {
             amount: Math.round(Math.random() * 100),
+            date: new Date(),
             comment: Math.random().toString(),
             description: "E2E_" + new Date()
-        }
+        };
+
+        expense.date.setSeconds(0);
+        expense.date.setMilliseconds(0);
 
         expenseForm.amount().sendKeys(expense.amount);
+        expenseForm.setDate(expense.date);
         expenseForm.comment().sendKeys(expense.comment);
         expenseForm.description().sendKeys(expense.description);
 
@@ -54,6 +59,7 @@ describe('expense login page', () => {
         browser.wait(firstRow.isPresent());
 
         expect(firstRow.amount()).toBe(<any>expense.amount);
+        expect(firstRow.date().then(d => JSON.stringify(d))).toBe(<any>JSON.stringify(expense.date));
         expect(firstRow.comment()).toBe(<any>expense.comment);
         expect(firstRow.description()).toBe(<any>expense.description);
         expect(firstRow.username()).toBe(<any>"admin");

@@ -20,25 +20,40 @@ export class ExpenseFormPage {
     setDate(date: Date) {
         let dateField = this.date();
 
-        dateField.sendKeys(
-            date.getFullYear(), Key.ARROW_RIGHT,
-            date.getHours(), Key.ARROW_RIGHT,
-            date.getMinutes(), Key.ARROW_RIGHT,
-            Key.ARROW_LEFT, Key.ARROW_LEFT,Key.ARROW_LEFT,Key.ARROW_LEFT,Key.ARROW_LEFT,
-            date.getDate(), Key.ARROW_RIGHT,
-            date.getMonth() + 1, Key.ARROW_RIGHT
-        );
+        var day:string = date.getDate().toString();
+        var month = (date.getMonth() + 1).toString();
+        var year = date.getFullYear().toString();
+        var hours = date.getHours().toString();
+        var minutes = date.getMinutes().toString();
 
-        /*dateField.sendKeys(date.getDate() + 1, Key.TAB);
-        browser.sleep(5000);
-        dateField.sendKeys(date.getMonth() + 1, Key.TAB);
-        browser.sleep(5000);
-        dateField.sendKeys(date.getFullYear(), Key.TAB);
-        browser.sleep(5000);
-        dateField.sendKeys(date.getHours(), Key.TAB);
-        browser.sleep(5000);
-        dateField.sendKeys(date.getMinutes());*/
-        browser.sleep(10000);
+        if (day.length == 1) {
+            day = "0" + day;
+        }
+
+        if (month.length == 1) {
+            month = "0" + month;
+        }
+
+        if (hours.length == 1) {
+            hours = "0" + hours;
+        }
+
+        if (minutes.length == 1) {
+            minutes = "0" + minutes;
+        }
+
+        browser.actions().click(this.amount().getWebElement())
+            .sendKeys(Key.TAB)
+            .sendKeys(
+                day,
+                month, Key.ARROW_RIGHT,
+                year,
+                hours,
+                minutes
+            )
+        .perform()
+
+        //browser.sleep(10000);
     }
 
     save() {
