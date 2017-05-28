@@ -1,3 +1,6 @@
 ﻿<div *ngIf="userIsLogged" class="topcorner">
-    <h4>{{user.firstName}} {{user.lastName}} <a (click)="logout()">(Log out)</a></h4>
+    <h4>
+        <span id="userInfo">{{user.firstName}} {{user.lastName}}</span>
+        <a id="logoutLink" (click)="logout()">(Log out)</a>
+    </h4>
 </div>

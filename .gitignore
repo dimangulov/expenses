@@ -262,3 +262,7 @@ _Pvt_Extensions
 # Jest Code Coverage report
 coverage/
 src/Expenses/Client/dist/
+src/Expenses/Client/test/setupJest.js
+src/Expenses/Client/**.js
+src/Expenses/Client/**/*.js
+src/Expenses/e2e/**/*.js
