@@ -6,7 +6,7 @@ import {config} from "../e2e.config";
 import {ExpenseListPage} from "../pages/expense-list.page";
 import {ExpenseFormPage} from "../pages/expense-form.page";
 
-describe('expense login page', () => {
+describe('expense list page', () => {
     let loginPage = new LoginPage();
     let userInfoControl = new UserInfoControl();
     let expenseList = new ExpenseListPage();
