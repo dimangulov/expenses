@@ -24,11 +24,11 @@ export class ExpenseRowControl {
     }
 
     edit() {
-        return this.getCell(4).all("button").get(0);
+        return this.getCell(5).all(by.tagName("button")).get(0);
     }
 
     delete() {
-        return this.getCell(4).all("button").get(1);
+        return this.getCell(5).all(by.tagName("button")).get(1);
     }
 
     private getCell(index: number): ElementFinder {

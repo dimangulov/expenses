@@ -64,4 +64,61 @@ describe('expense login page', () => {
         expect(firstRow.description()).toBe(<any>expense.description);
         expect(firstRow.username()).toBe(<any>"admin");
     });
+
+    it('should edit an expense', () => {
+        let existinRow = expenseList.getFirstRow();
+
+        existinRow.edit().click();
+
+        let expense = {
+            amount: Math.round(Math.random() * 100),
+            date: new Date(),
+            comment: Math.random().toString(),
+            description: "E2E_" + new Date()
+        };
+        expense.date.setSeconds(0);
+        expense.date.setMilliseconds(0);
+
+        expenseForm.amount().clear();
+        expenseForm.amount().sendKeys(expense.amount);
+
+        expenseForm.setDate(expense.date);
+
+        expenseForm.comment().clear();
+        expenseForm.comment().sendKeys(expense.comment);
+
+        expenseForm.description().clear();
+        expenseForm.description().sendKeys(expense.description);
+
+        //browser.sleep(2000);
+        expenseForm.save().click();
+
+        existinRow = expenseList.getFirstRow();
+
+        browser.wait(existinRow.isPresent());
+
+        expect(existinRow.amount()).toBe(<any>expense.amount);
+        expect(existinRow.date().then(d => JSON.stringify(d))).toBe(<any>JSON.stringify(expense.date));
+        expect(existinRow.comment()).toBe(<any>expense.comment);
+        expect(existinRow.description()).toBe(<any>expense.description);
+        expect(existinRow.username()).toBe(<any>"admin");
+    });
+
+    it('should delete an expense', (done) => {
+        let existinRow = expenseList.getFirstRow();
+
+        existinRow.date().then(d => {
+            var existingRowDate = d;
+
+            existinRow.delete().click();
+
+            existinRow = expenseList.getFirstRow();
+
+            browser.wait(existinRow.isPresent());
+
+            expect(existinRow.date().then(d => JSON.stringify(d))).not.toBe(<any>JSON.stringify(existingRowDate));
+
+            done();
+        })
+    });
 });
