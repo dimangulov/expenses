@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Expenses.Api.Common.Exceptions;
 using Expenses.Api.Models.Login;
 using Expenses.Api.Models.Users;
 using Expenses.Data.Access.DAL;
@@ -83,7 +84,7 @@ namespace Expenses.Queries.Tests
 
             Action execute = () => _query.Authenticate(user.Username, _random.Next().ToString());
 
-            execute.ShouldThrow<UnauthorizedAccessException>();
+            execute.ShouldThrow<BadRequestException>();
         }
 
         [Fact]
@@ -100,7 +101,7 @@ namespace Expenses.Queries.Tests
 
             Action execute = () => _query.Authenticate(user.Username, password);
 
-            execute.ShouldThrow<UnauthorizedAccessException>();
+            execute.ShouldThrow<BadRequestException>();
         }
 
         [Fact]

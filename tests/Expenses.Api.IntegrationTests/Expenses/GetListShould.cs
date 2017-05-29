@@ -24,7 +24,7 @@ namespace Expenses.Api.IntegrationTests.Expenses
 
         public static async Task<DataResult<ExpenseModel>> Get(HttpClient client)
         {
-            var response = await client.GetAsync($"api/Expenses?skip={0}&take={20}&fromDate<{DateTime.Now:u}");
+            var response = await client.GetAsync($"api/Expenses");
             response.EnsureSuccessStatusCode();
             var responseText = await response.Content.ReadAsStringAsync();
             var items = JsonConvert.DeserializeObject<DataResult<ExpenseModel>>(responseText);

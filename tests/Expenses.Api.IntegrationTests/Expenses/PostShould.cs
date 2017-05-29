@@ -41,7 +41,7 @@ namespace Expenses.Api.IntegrationTests.Expenses
             createdItem.Comment.Should().Be(requestItem.Comment);
             createdItem.Date.Should().Be(requestItem.Date);
             createdItem.Description.Should().Be(requestItem.Description);
-            createdItem.Username.Should().Be(ApiServer.Username);
+            createdItem.Username.Should().Be("admin admin");
 
             return createdItem;
         }

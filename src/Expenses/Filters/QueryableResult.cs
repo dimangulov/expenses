@@ -5,6 +5,7 @@ using AutoQueryable.Models;
 using Expenses.Api.Models.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Primitives;
 
 namespace Expenses.Filters
 {
@@ -18,11 +19,7 @@ namespace Expenses.Filters
             if (query == null) throw new Exception("Unable to retreive value of IQueryable from context result.");
             Type entityType = query.GetType().GenericTypeArguments[0];
 
-            //string queryString = context.HttpContext.Request.QueryString.HasValue ? context.HttpContext.Request.QueryString.Value : null;
-
-            if (!context.HttpContext.Request.Query.ContainsKey("commands")) return;
-            var commands = context.HttpContext.Request.Query["commands"];
-            if (string.IsNullOrWhiteSpace(commands)) return;
+            var commands = context.HttpContext.Request.Query.ContainsKey("commands") ? context.HttpContext.Request.Query["commands"] : new StringValues();
 
             var data = QueryableHelper.GetAutoQuery(commands, entityType, query,
                 new AutoQueryableProfile {UnselectableProperties = new string[0]});

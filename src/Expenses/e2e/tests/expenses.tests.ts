@@ -62,7 +62,7 @@ describe('expense list page', () => {
         expect(firstRow.date().then(d => JSON.stringify(d))).toBe(<any>JSON.stringify(expense.date));
         expect(firstRow.comment()).toBe(<any>expense.comment);
         expect(firstRow.description()).toBe(<any>expense.description);
-        expect(firstRow.username()).toBe(<any>"admin");
+        expect(firstRow.username()).toBe(<any>"admin admin");
     });
 
     it('should edit an expense', () => {
@@ -101,7 +101,7 @@ describe('expense list page', () => {
         expect(existinRow.date().then(d => JSON.stringify(d))).toBe(<any>JSON.stringify(expense.date));
         expect(existinRow.comment()).toBe(<any>expense.comment);
         expect(existinRow.description()).toBe(<any>expense.description);
-        expect(existinRow.username()).toBe(<any>"admin");
+        expect(existinRow.username()).toBe(<any>"admin admin");
     });
 
     it('should delete an expense', (done) => {

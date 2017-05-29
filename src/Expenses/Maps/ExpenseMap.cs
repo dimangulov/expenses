@@ -11,7 +11,7 @@ namespace Expenses.Maps
         public void Configure(IMapperConfigurationExpression configuration)
         {
             var map = configuration.CreateMap<Expense, ExpenseModel>();
-            map.ForMember(x => x.Username, x => x.MapFrom(y => y.User.Username));
+            map.ForMember(x => x.Username, x => x.MapFrom(y => y.User.FirstName + " " + y.User.LastName));
         }
     }
 }
