@@ -37,6 +37,9 @@ import { ExpenseService } from "./shared/expense.service";
 import { FilterHelper } from "./shared/filter.helper";
 import { AlertComponent } from './components/alert/alert.component';
 import { CurrentUserInfoComponent } from './components/current-user-info/current-user-info.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { ChangeMyPasswordComponent } from './containers/change-my-password/change-my-password.component';
+import { ChangeUserPasswordComponent } from './containers/change-user-password/change-user-password.component';
 
 import { GridModule } from '@progress/kendo-angular-grid';
 import { ExpenseResolve} from "./resolvers/expense.resolver";
@@ -67,7 +70,10 @@ export function createTranslateLoader(http: Http, baseHref) {
         ExpensesComponent,
         RegisterComponent,
         UserListComponent,
-        UserFormComponent
+        UserFormComponent,
+        ChangePasswordComponent,
+        ChangeMyPasswordComponent,
+        ChangeUserPasswordComponent
     ],
     imports: [
         CommonModule,
@@ -101,19 +107,21 @@ export function createTranslateLoader(http: Http, baseHref) {
                 children: [
                     { path: '', component: ExpenseListComponent },
                     { path: 'add', component: ExpenseFormComponent },
-                    { path: 'edit/:id', component: ExpenseFormComponent, resolve: { expense: ExpenseResolve} },
-                    { path: 'report', component: ExpenseReportComponent}
-                ]
+                    { path: ':id/edit', component: ExpenseFormComponent, resolve: { expense: ExpenseResolve} },
+                    { path: 'report', component: ExpenseReportComponent} 
+                ] 
             },
             {
                 path: 'users', component: UsersComponent, canActivate: [AuthGuard],
                 children: [
                     { path: '', component: UserListComponent },
-                    { path: 'edit/:id', component: UserFormComponent, resolve: { user: UserResolve } },
+                    { path: ':id/edit', component: UserFormComponent, resolve: { user: UserResolve } },
+                    { path: ':id/password', component: ChangeUserPasswordComponent}
                 ]
             },
             { path: 'login', component: LoginComponent },
             { path: 'register', component: RegisterComponent },
+            { path: 'password', component: ChangeMyPasswordComponent, canActivate: [AuthGuard]},
         ])
     ],
     providers: [

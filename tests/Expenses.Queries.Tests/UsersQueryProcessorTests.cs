@@ -249,5 +249,23 @@ namespace Expenses.Queries.Tests
 
             create.ShouldThrow<NotFoundException>();
         }
+
+        [Fact]
+        public async Task ChangePasswordShouldChangeUsersPassword()
+        {
+            var user = new User { Id = _random.Next() };
+            _userList.Add(user);
+
+            var newPassword = _random.Next().ToString();
+
+            await _query.ChangePassword(user.Id, new ChangeUserPasswordModel
+            {
+                Password = newPassword
+            });
+
+            user.Password.Should().Be(newPassword.ToMD5());
+
+            _uow.Verify(x => x.CommitAsync());
+        }
     }
 }

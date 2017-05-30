@@ -12,5 +12,6 @@ namespace Expenses.Queries.Queries
         Task<User> Create(CreateUserModel model);
         Task<User> Update(int id, UpdateUserModel model);
         Task Delete(int id);
+        Task ChangePassword(int id, ChangeUserPasswordModel model);
     }
 }

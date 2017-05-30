@@ -35,6 +35,13 @@ export class HttpService {
             ;
     }
 
+    public postVoid(url: string, body: any): Observable<Response> {
+        var options = this.getHttpOptions();
+        return this.http.post(url, body, options)
+                .catch(r => this.handleResponse(r))
+            ;
+    }
+
     public put(url: string, body:any): Observable<Response> {
         var options = this.getHttpOptions();
         return this.http.put(url, body, options)

@@ -41,5 +41,13 @@ namespace Expenses.Server.RestAPI
             var resultModel = _mapper.Map<UserModel>(result);
             return resultModel;
         }
+
+        [HttpPost("Password")]
+        [ValidateModel]
+        [Authorize]
+        public async Task ChangePassword([FromBody]ChangeUserPasswordModel requestModel)
+        {
+            await _query.ChangePassword(requestModel);
+        }
     }
 }

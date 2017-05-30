@@ -28,6 +28,13 @@ namespace Expenses.Api.IntegrationTests.Helpers
             return data;
         }
 
+        public async Task PostAsync(string url, object body)
+        {
+            var response = await _client.PostAsync(url, new JsonContent(body));
+
+            response.EnsureSuccessStatusCode();
+        }
+
         public async Task<T> PutAsync<T>(string url, object body)
         {
             var response = await _client.PutAsync(url, new JsonContent(body));

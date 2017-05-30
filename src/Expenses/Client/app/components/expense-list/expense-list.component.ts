@@ -37,7 +37,7 @@ export class ExpenseListComponent implements OnInit {
         console.log(state);
         this.loadItems();
     }
-
+     
     loadItems() {
         this.expenseService.getAll((options) => this.filterHelper.buildRequest(options, this.state))
             .subscribe(result => {
@@ -48,7 +48,7 @@ export class ExpenseListComponent implements OnInit {
 
     editHandler({dataItem}) {
         console.log(dataItem);
-        this.router.navigate(["expenses", "edit", dataItem.id]);
+        this.router.navigate(["expenses", dataItem.id, "edit"]);
     }
 
     removeHandler({ dataItem }) {

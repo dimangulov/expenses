@@ -121,5 +121,12 @@ namespace Expenses.Queries.Queries
             user.IsDeleted = true;
             await _uow.CommitAsync();
         }
+
+        public async Task ChangePassword(int id, ChangeUserPasswordModel model)
+        {
+            var user = Get(id);
+            user.Password = model.Password.ToMD5();
+            await _uow.CommitAsync();
+        }
     }
 }

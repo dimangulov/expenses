@@ -33,4 +33,8 @@ export class UserService {
     add(item: IUser): Observable<any> {
         return this.http.post(`${this.baseUrl}/api/users`, item);
     }
+
+    changePassword(id:number, password:string): Observable<any> {
+        return this.http.postVoid(`${this.baseUrl}/api/users/${id}/password`, {password});
+    }
 }

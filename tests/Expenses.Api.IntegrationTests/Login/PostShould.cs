@@ -26,13 +26,22 @@ namespace Expenses.Api.IntegrationTests.Login
         [Fact]
         public async Task AutheticateAdmin()
         {
+            var username = "admin";
+            var password = "admin";
+            var result = await Autheticate(username, password);
+
+            result.User.Username.Should().Be(username);
+        }
+
+        public async Task<UserWithTokenModel> Autheticate(string username, string password)
+        {
             var response = await _client.PostAsync<UserWithTokenModel>("api/Login/Authenticate", new LoginModel
             {
-                Username = "admin",
-                Password = "admin"
+                Username = username,
+                Password = password
             });
 
-            response.User.Username.Should().Be("admin");
+            return response;
         }
 
         [Fact]
@@ -54,6 +63,30 @@ namespace Expenses.Api.IntegrationTests.Login
             createdUser.FirstName.Should().Be(requestItem.FirstName);
 
             return createdUser;
+        }
+
+        [Fact]
+        public async Task ChangeUserPassword()
+        {
+            var requestItem = new RegisterModel
+            {
+                Username = "TU_" + _random.Next(),
+                Password = _random.Next().ToString(),
+                LastName = _random.Next().ToString(),
+                FirstName = _random.Next().ToString()
+            };
+
+            await _client.PostAsync<UserModel>("api/Login/Register", requestItem);
+
+            var newClient = new HttpClientWrapper(_server.GetAuthenticatedClient(requestItem.Username, requestItem.Password));
+
+            var newPassword = _random.Next().ToString();
+            await newClient.PostAsync($"api/Login/password", new ChangeUserPasswordModel
+            {
+                Password = newPassword
+            });
+
+            await Autheticate(requestItem.Username, newPassword);
         }
     }
 }

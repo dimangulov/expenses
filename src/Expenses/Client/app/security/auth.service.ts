@@ -30,6 +30,10 @@ export class AuthService {
         return this.http.post("/api/Login/Register", user);
     }
 
+    changePassword(password: string) {
+        return this.http.post("/api/Login/Password", {password}, this.getHttpOptions());
+    }
+
     tryGetInfoFromStore(): boolean {
         var data = sessionStorage.getItem(this.storageKey);
 
@@ -62,5 +66,14 @@ export class AuthService {
 
     isLoggedIn() {
         return this.token != null;
+    }
+
+    private getHttpOptions(): RequestOptionsArgs {
+        var headers = new Headers();
+        headers.append("Authorization", "Bearer " + this.token);
+
+        return {
+            headers
+        };
     }
 }

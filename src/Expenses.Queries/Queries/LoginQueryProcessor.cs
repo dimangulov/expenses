@@ -8,6 +8,7 @@ using Expenses.Data.Access.DAL;
 using Expenses.Data.Access.Helpers;
 using Expenses.Data.Model;
 using Expenses.Queries.Models;
+using Expenses.Security;
 using Expenses.Security.Auth;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,12 +19,16 @@ namespace Expenses.Queries.Queries
         private readonly IUnitOfWork _uow;
         private readonly ITokenBuilder _tokenBuilder;
         private readonly IUsersQueryProcessor _usersQueryProcessor;
+        private readonly ISecurityContext _context;
+        private Random _random;
 
-        public LoginQueryProcessor(IUnitOfWork uow, ITokenBuilder tokenBuilder, IUsersQueryProcessor usersQueryProcessor)
+        public LoginQueryProcessor(IUnitOfWork uow, ITokenBuilder tokenBuilder, IUsersQueryProcessor usersQueryProcessor, ISecurityContext context)
         {
+            _random = new Random();
             _uow = uow;
             _tokenBuilder = tokenBuilder;
             _usersQueryProcessor = usersQueryProcessor;
+            _context = context;
         }
 
         public UserWithToken Authenticate(string username, string password)
@@ -64,6 +69,11 @@ namespace Expenses.Queries.Queries
 
             var user = await _usersQueryProcessor.Create(requestModel);
             return user;
+        }
+
+        public async Task ChangePassword(ChangeUserPasswordModel requestModel)
+        {
+            await _usersQueryProcessor.ChangePassword(_context.User.Id, requestModel);
         }
     }
 }

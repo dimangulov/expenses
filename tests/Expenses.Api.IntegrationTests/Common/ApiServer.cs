@@ -27,20 +27,20 @@ namespace Expenses.Api.IntegrationTests.Common
                 .Build();
 
             Server = new TestServer(new WebHostBuilder().UseStartup<Startup>());
-            Client = Server.CreateClient();
-            
-            Authenticate(Username, Password);
+            Client = GetAuthenticatedClient(Username, Password);
         }
 
-        private void Authenticate(string username, string password)
+        public HttpClient GetAuthenticatedClient(string username, string password)
         {
-            var response = Client.PostAsync("/api/Login/Authenticate",
+            var client = Server.CreateClient();
+            var response = client.PostAsync("/api/Login/Authenticate",
                 new JsonContent(new LoginModel {Password = password, Username = username})).Result;
 
             response.EnsureSuccessStatusCode();
 
             var data = JsonConvert.DeserializeObject<UserWithTokenModel>(response.Content.ReadAsStringAsync().Result);
-            Client.DefaultRequestHeaders.Add("Authorization", "Bearer " + data.Token);
+            client.DefaultRequestHeaders.Add("Authorization", "Bearer " + data.Token);
+            return client;
         }
 
         public HttpClient Client { get; private set; }

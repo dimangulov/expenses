@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Expenses.Api.Models.Common;
 using Expenses.Api.Models.Expenses;
@@ -51,6 +52,13 @@ namespace Expenses.Server.RestAPI
         //    var model = _mapper.Map<UserModel>(item);
         //    return model;
         //}
+
+        [HttpPost("{id}/password")]
+        [ValidateModel]
+        public async Task ChangePassword(int id,[FromBody]ChangeUserPasswordModel requestModel)
+        {
+            await _query.ChangePassword(id, requestModel);
+        }
 
         [HttpPut("{id}")]
         [ValidateModel]

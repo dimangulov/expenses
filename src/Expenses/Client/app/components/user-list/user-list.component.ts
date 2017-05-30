@@ -4,6 +4,7 @@ import { FilterHelper } from "../../shared/filter.helper";
 import { GridDataResult, DataStateChangeEvent } from '@progress/kendo-angular-grid';
 import { State } from '@progress/kendo-data-query';
 import { Router } from '@angular/router';
+import { IUser } from "../../models/IUser";
 
 @Component({
     selector: 'user-list',
@@ -44,14 +45,13 @@ export class UserListComponent implements OnInit {
     loadItems() {
         this.userService.getAll((options) => this.filterHelper.buildRequest(options, this.state))
             .subscribe(result => {
-                console.log('Get result: ', result);
                 this.items = result;
             });
     }
 
     editHandler({dataItem}) {
         console.log(dataItem);
-        this.router.navigate(["users", "edit", dataItem.id]);
+        this.router.navigate(["users", dataItem.id, "edit"]);
     }
 
     removeHandler({ dataItem }) {
@@ -65,10 +65,15 @@ export class UserListComponent implements OnInit {
                 () => {
                     //TODO
                 }
-            );
+            ); 
     }
 
     reduceRoles(roles: string[]) {
         return roles.reduce((c, n) => c + (c == "" ? "" : ", ") + n, "");
+    }
+     
+    setPassword(dataItem:IUser) {
+        console.log(dataItem);
+        this.router.navigate(["users", dataItem.id, "password"]);
     }
 }

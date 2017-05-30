@@ -9,6 +9,7 @@ using Expenses.Data.Access.DAL;
 using Expenses.Data.Access.Helpers;
 using Expenses.Data.Model;
 using Expenses.Queries.Queries;
+using Expenses.Security;
 using Expenses.Security.Auth;
 using FluentAssertions;
 using Moq;
@@ -25,6 +26,7 @@ namespace Expenses.Queries.Tests
         private List<Role> _roleList;
         private Mock<ITokenBuilder> _tokenBuilder;
         private Mock<IUsersQueryProcessor> _userQueryProcessor;
+        private Mock<ISecurityContext> _context;
 
         public LoginQueryProcessorTests()
         {
@@ -36,7 +38,10 @@ namespace Expenses.Queries.Tests
 
             _tokenBuilder = new Mock<ITokenBuilder>(MockBehavior.Strict);
             _userQueryProcessor = new Mock<IUsersQueryProcessor>();
-            _query = new LoginQueryProcessor(_uow.Object, _tokenBuilder.Object, _userQueryProcessor.Object);
+
+            _context = new Mock<ISecurityContext>(MockBehavior.Strict);
+
+            _query = new LoginQueryProcessor(_uow.Object, _tokenBuilder.Object, _userQueryProcessor.Object, _context.Object);
         }
 
         [Fact]
@@ -128,6 +133,27 @@ namespace Expenses.Queries.Tests
             var result = await _query.Register(requestModel);
 
             result.Should().Be(createdUser);
+        }
+
+        [Fact]
+        public async Task ChangePasswordShouldCallUserQueryWithCurrentUser()
+        {
+            var user = new User { Id = _random.Next() };
+
+            _context.SetupGet(x => x.User).Returns(user);
+
+            var requestModel = new ChangeUserPasswordModel
+            {
+                Password = _random.Next().ToString()
+            };
+
+            _userQueryProcessor.Setup(x => x.ChangePassword(user.Id, requestModel))
+                .Returns(Task.FromResult(0))
+                .Verifiable();
+
+            await _query.ChangePassword(requestModel);
+
+            _userQueryProcessor.Verify();
         }
     }
 }
