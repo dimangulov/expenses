@@ -31,7 +31,7 @@ namespace Expenses.Api.IntegrationTests.Users
 
             var requestItem = new UpdateUserModel
             {
-                Username = _random.Next().ToString(),
+                Username = "TU_Update_" + _random.Next(),
                 FirstName = _random.Next().ToString(),
                 LastName = _random.Next().ToString(),
                 Roles = new[] {Roles.Manager}

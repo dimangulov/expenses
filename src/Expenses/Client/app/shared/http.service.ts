@@ -68,7 +68,7 @@ export class HttpService {
             return Observable.throw(res);;
         }
 
-        return res;
+        return Observable.throw(res);
     }
 
     private getHttpOptions(): RequestOptionsArgs {

@@ -42,10 +42,10 @@ export class ExpenseFormComponent implements OnInit {
 
         return method.subscribe(
             data => {
-                this.location.back();;
+                this.location.back();
             },
             error => {
-                console.log(error._body);
+                console.log(error, error.json());
                 this.alertService.error(error._body);
             });
     }
