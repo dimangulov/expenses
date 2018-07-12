@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Resolve } from '@angular/router';
+import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
-import { SignalR, SignalRConnection } from 'ng2-signalr';
+import { SignalR, ISignalRConnection } from 'ng2-signalr';
 
 @Injectable()
-export class ConnectionResolver implements Resolve<SignalRConnection> {
+export class ConnectionResolver implements Resolve<ISignalRConnection> {
 
     constructor(private _signalR: SignalR) { }
 
-    resolve() {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)  {
         console.log('ConnectionResolver. Resolving...');
         return this._signalR.connect();
     }

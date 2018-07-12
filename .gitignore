@@ -266,3 +266,4 @@ src/Expenses/Client/test/setupJest.js
 src/Expenses/Client/**.js
 src/Expenses/Client/**/*.js
 src/Expenses/e2e/**/*.js
+/src/Expenses/package-lock.json
