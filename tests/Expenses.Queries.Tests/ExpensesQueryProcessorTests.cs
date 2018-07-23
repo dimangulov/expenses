@@ -102,7 +102,7 @@ namespace Expenses.Queries.Tests
                 _query.Get(expense.Id);
             };
 
-            get.ShouldThrow<NotFoundException>();
+            get.Should().Throw<NotFoundException>();
         }
 
         [Fact]
@@ -116,7 +116,7 @@ namespace Expenses.Queries.Tests
                 _query.Get(_random.Next());
             };
 
-            get.ShouldThrow<NotFoundException>();
+            get.Should().Throw<NotFoundException>();
         }
 
         [Fact]
@@ -130,7 +130,7 @@ namespace Expenses.Queries.Tests
                 _query.Get(expense.Id);
             };
 
-            get.ShouldThrow<NotFoundException>();
+            get.Should().Throw<NotFoundException>();
         }
 
         [Fact]
@@ -189,7 +189,7 @@ namespace Expenses.Queries.Tests
                 var result = _query.Update(_random.Next(), new UpdateExpenseModel()).Result;
             };
 
-            create.ShouldThrow<NotFoundException>();
+            create.Should().Throw<NotFoundException>();
         }
 
         [Fact]
@@ -216,7 +216,7 @@ namespace Expenses.Queries.Tests
                 _query.Delete(expense.Id).Wait();
             };
 
-            execute.ShouldThrow<NotFoundException>();
+            execute.Should().Throw<NotFoundException>();
         }
 
         [Fact]
@@ -227,7 +227,7 @@ namespace Expenses.Queries.Tests
                 _query.Delete(_random.Next()).Wait();
             };
 
-            execute.ShouldThrow<NotFoundException>();
+            execute.Should().Throw<NotFoundException>();
         }
     }
 }

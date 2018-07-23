@@ -35,6 +35,7 @@ namespace Expenses.Api.IntegrationTests.Users
         {
             var items = await Get(_client);
             items.Should().NotBeNull();
+            items.Data.Should().NotBeEmpty();
         }
     }
 }

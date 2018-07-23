@@ -49,7 +49,7 @@ namespace Expenses.Api.IntegrationTests.Expenses
         {
             var response = await _client.GetAsync(new Uri($"api/Expenses/-1", UriKind.Relative));
             
-            response.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.NotFound);
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
     }
 }

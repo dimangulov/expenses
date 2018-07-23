@@ -48,7 +48,7 @@ namespace Expenses.Api.IntegrationTests.Users
         {
             var response = await _client.GetAsync(new Uri($"api/Users/-1", UriKind.Relative));
             
-            response.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.NotFound);
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
     }
 }

@@ -89,7 +89,7 @@ namespace Expenses.Queries.Tests
 
             Action execute = () => _query.Authenticate(user.Username, _random.Next().ToString());
 
-            execute.ShouldThrow<BadRequestException>();
+            execute.Should().Throw<BadRequestException>();
         }
 
         [Fact]
@@ -106,7 +106,7 @@ namespace Expenses.Queries.Tests
 
             Action execute = () => _query.Authenticate(user.Username, password);
 
-            execute.ShouldThrow<BadRequestException>();
+            execute.Should().Throw<BadRequestException>();
         }
 
         [Fact]

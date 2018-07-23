@@ -1,4 +1,6 @@
-﻿namespace Expenses.Api.Models.Users
+﻿using System.Collections.Generic;
+
+namespace Expenses.Api.Models.Users
 {
     public class UserModel
     {

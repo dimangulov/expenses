@@ -54,7 +54,7 @@ export class UserListComponent implements OnInit {
         this.router.navigate(["users", dataItem.id, "edit"]);
     }
 
-    removeHandler({ dataItem }) {
+    removeHandler({ dataItem }: {dataItem: IUser}) {
         console.log(dataItem);
         this.userService.delete(dataItem)
             .subscribe(

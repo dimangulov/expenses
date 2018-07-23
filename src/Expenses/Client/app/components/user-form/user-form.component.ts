@@ -26,7 +26,7 @@ export class UserFormComponent implements OnInit {
         private location:Location) { }
 
     ngOnInit() {
-        let data:IUser = this.route.snapshot.data['user'];
+        let data: IUser = <IUser>this.route.snapshot.data['user'];
 
         if (data) {
             //data.date = <any>JSON.stringify(data.date);

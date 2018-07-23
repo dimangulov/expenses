@@ -29,13 +29,13 @@ export class NavMenuComponent {
 
         this.userLogoutSubscription = this.authService.userLoggedOut.subscribe(u => {
             this.userIsLogged = false;
-            this.user = null;
+            this.user = <IUser>null;
         });
     }
 
     ngOnDestroy(): void {
         this.userIsLogged = false;
-        this.user = null;
+        this.user = <IUser>null;
 
         this.userSubscription.unsubscribe();;
         this.userLogoutSubscription.unsubscribe();;

@@ -54,11 +54,13 @@ export class AppComponent implements OnInit, OnDestroy {
         this.routerSub$ = this.router.events
             .filter(event => event instanceof NavigationEnd)
             .map(() => this.activatedRoute)
-            .map(route => {
-                while (route.firstChild) route = route.firstChild;
+            .map<ActivatedRoute, ActivatedRoute>((route) => {
+                while (route.firstChild) {
+                    route = route.firstChild;
+                }
                 return route;
             })
-            .filter(route => route.outlet === 'primary')
+            .filter<ActivatedRoute>(route => route.outlet === 'primary')
             .mergeMap(route => route.data)
             .subscribe((event) => {
                 this._setMetaAndLinks(event);
@@ -74,8 +76,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
         this.title.setTitle(title);
 
-        const metaData = event['meta'] || [];
-        const linksData = event['links'] || [];
+        const metaData:MetaDefinition[] = event['meta'] || [];
+        const linksData:MetaDefinition[] = event['links'] || [];
 
         for (let i = 0; i < metaData.length; i++) {
             this.meta.updateTag(metaData[i]);

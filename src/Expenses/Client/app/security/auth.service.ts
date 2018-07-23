@@ -8,7 +8,7 @@ import { IUserWithToken } from "../models/IUserWithToken";
 @Injectable()
 export class AuthService {
     token: string = null;
-    user: IUser = null;
+    user: IUser = <IUser>null;
 
     userLoggedIn: EventEmitter<IUser> = new EventEmitter();
     userLoggedOut: EventEmitter<any> = new EventEmitter();
@@ -57,7 +57,7 @@ export class AuthService {
     logout() {
         // remove user from local storage to log user out
         this.token = null;
-        this.user = null;
+        this.user = <IUser>null;
 
         sessionStorage.removeItem(this.storageKey);
     

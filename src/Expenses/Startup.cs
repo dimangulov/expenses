@@ -58,9 +58,24 @@ namespace Expenses
 
             ContainerSetup.Setup(services, Configuration);
 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, (o) =>
+            {
+                o.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    IssuerSigningKey = TokenAuthOption.Key,
+                    ValidAudience = TokenAuthOption.Audience,
+                    ValidIssuer = TokenAuthOption.Issuer,
+                    ValidateIssuerSigningKey = true,
+                    ValidateLifetime = true,
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ClockSkew = TimeSpan.FromMinutes(0)
+                };
+            });
+
             services.AddAuthorization(auth =>
             {
-                auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
+                auth.AddPolicy(JwtBearerDefaults.AuthenticationScheme, new AuthorizationPolicyBuilder()
                     .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
                     .RequireAuthenticatedUser().Build());
             });
@@ -91,6 +106,8 @@ namespace Expenses
 
             app.UseStaticFiles();
 
+            app.UseAuthentication();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -104,8 +121,6 @@ namespace Expenses
                 // Enable middleware to serve swagger-ui (HTML, JS, CSS etc.), specifying the Swagger JSON endpoint.
                 app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
 
-                ConfigureAuthentication(app);
-
                 app.MapWhen(x => !x.Request.Path.Value.StartsWith("/swagger"), builder =>
                 {
                     builder.UseMvc(routes =>
@@ -118,8 +133,6 @@ namespace Expenses
             }
             else
             {
-                ConfigureAuthentication(app);
-
                 app.UseMvc(routes =>
                 {
                     routes.MapRoute(
@@ -141,22 +154,6 @@ namespace Expenses
                 var context = serviceScope.ServiceProvider.GetService<MainDbContext>();
                 context.Database.Migrate();
             }
-        }
-
-        private static void ConfigureAuthentication(IApplicationBuilder app)
-        {
-            app.UseJwtBearerAuthentication(new JwtBearerOptions()
-            {
-                TokenValidationParameters = new TokenValidationParameters()
-                {
-                    IssuerSigningKey = TokenAuthOption.Key,
-                    ValidAudience = TokenAuthOption.Audience,
-                    ValidIssuer = TokenAuthOption.Issuer,
-                    ValidateIssuerSigningKey = true,
-                    ValidateLifetime = true,
-                    ClockSkew = TimeSpan.FromMinutes(0)
-                },
-            });
         }
     }
 }

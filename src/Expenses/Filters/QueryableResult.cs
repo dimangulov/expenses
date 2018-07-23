@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using AutoQueryable.Extensions;
 using AutoQueryable.Helpers;
 using AutoQueryable.Models;
@@ -23,8 +24,13 @@ namespace Expenses.Filters
 
             var data = QueryableHelper.GetAutoQuery(commands, entityType, query,
                 new AutoQueryableProfile {UnselectableProperties = new string[0]});
+
+            var toArray = typeof(Enumerable).GetMethod("ToArray").MakeGenericMethod(typeof(object));
+
+            var fetchedData = toArray.Invoke(null, new object[] {data});
+
             var total = System.Linq.Queryable.Count(query);
-            context.Result = new OkObjectResult(new DataResult{Data = data, Total = total});
+            context.Result = new OkObjectResult(new DataResult{Data = fetchedData, Total = total});
         }
     }
 }

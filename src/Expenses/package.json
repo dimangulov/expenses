@@ -68,7 +68,7 @@
     "moment": "^2.22.2",
     "ng2-bootstrap": "^1.6.1",
     "ng2-signalr": "^2.0.2",
-    "node-sass": "^4.9.2",
+    "node-sass": "^4.8.1",
     "preboot": "^4.5.2",
     "primeng": "^4.0.1",
     "raw-loader": "^0.5.1",
