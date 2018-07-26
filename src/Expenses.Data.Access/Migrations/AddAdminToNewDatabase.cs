@@ -15,9 +15,9 @@ namespace Expenses.Data.Access.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql(@"
-DECLARE @bin VARBINARY(MAX) = HASHBYTES('MD5', 'admin')
-DECLARE @password NVARCHAR(MAX)= CAST(N'' AS XML).value('xs:base64Binary(xs:hexBinary(sql:variable(""@bin"")))', 'VARCHAR(MAX)')
+            var adminPassword = "admin".WithBCrypt();
+            migrationBuilder.Sql($@"
+DECLARE @password NVARCHAR(MAX) = N'{adminPassword}'
 
 INSERT INTO dbo.Users
         ( FirstName ,

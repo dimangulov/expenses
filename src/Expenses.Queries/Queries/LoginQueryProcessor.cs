@@ -33,15 +33,19 @@ namespace Expenses.Queries.Queries
 
         public UserWithToken Authenticate(string username, string password)
         {
-            password = password.ToMD5();
             var user = (from u in _uow.Query<User>()
-                    where u.Username == username && u.Password == password && !u.IsDeleted
+                    where u.Username == username && !u.IsDeleted
                     select u)
                 .Include(x => x.Roles)
                 .ThenInclude(x => x.Role)
                 .FirstOrDefault();
 
             if (user == null)
+            {
+                throw new BadRequestException("username/password aren't right");
+            }
+
+            if (string.IsNullOrWhiteSpace(password) || !user.Password.VerifyWithBCrypt(password))
             {
                 throw new BadRequestException("username/password aren't right");
             }

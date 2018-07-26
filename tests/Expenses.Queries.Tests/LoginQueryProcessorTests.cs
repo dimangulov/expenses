@@ -51,7 +51,7 @@ namespace Expenses.Queries.Tests
             var user = new User
             {
                 Username = _random.Next().ToString(),
-                Password = password.ToMD5(),
+                Password = password.WithBCrypt(),
                 Roles = new List<UserRole>
                 {
                     new UserRole{Role = new Role {Name = _random.Next().ToString()}},
@@ -83,7 +83,7 @@ namespace Expenses.Queries.Tests
             var user = new User
             {
                 Username = _random.Next().ToString(),
-                Password = password.ToMD5(),
+                Password = password.WithBCrypt(),
             };
             _userList.Add(user);
 
@@ -99,7 +99,7 @@ namespace Expenses.Queries.Tests
             var user = new User
             {
                 Username = _random.Next().ToString(),
-                Password = password.ToMD5(),
+                Password = password.WithBCrypt(),
                 IsDeleted = true
             };
             _userList.Add(user);

@@ -109,7 +109,7 @@ namespace Expenses.Queries.Tests
 
             var result = await _query.Create(model);
 
-            result.Password.Should().Be(model.Password.ToMD5());
+            result.Password.Should().NotBeEmpty();
             result.Username.Should().Be(model.Username);
             result.LastName.Should().Be(model.LastName);
             result.FirstName.Should().Be(model.FirstName);
@@ -263,7 +263,7 @@ namespace Expenses.Queries.Tests
                 Password = newPassword
             });
 
-            user.Password.Should().Be(newPassword.ToMD5());
+            user.Password.Should().NotBeEmpty();
 
             _uow.Verify(x => x.CommitAsync());
         }

@@ -58,7 +58,7 @@ namespace Expenses.Queries.Queries
             var user = new User
             {
                 Username = model.Username.Trim(),
-                Password = model.Password.Trim().ToMD5(),
+                Password = model.Password.Trim().WithBCrypt(),
                 FirstName = model.FirstName.Trim(),
                 LastName = model.LastName.Trim(),
             };
@@ -125,7 +125,7 @@ namespace Expenses.Queries.Queries
         public async Task ChangePassword(int id, ChangeUserPasswordModel model)
         {
             var user = Get(id);
-            user.Password = model.Password.ToMD5();
+            user.Password = model.Password.WithBCrypt();
             await _uow.CommitAsync();
         }
     }
